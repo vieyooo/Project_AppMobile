@@ -31,9 +31,9 @@ class MainActivity : AppCompatActivity() {
 
         // ----- Menu bawah (Katalog = halaman ini, tidak perlu aksi) -----
         findViewById<View>(R.id.navOperator).setOnClickListener {
-            // TODO: startActivity(Intent(this, OperatorActivity::class.java))
-            Toast.makeText(this, "Operator segera hadir", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, OperatorActivity::class.java))
         }
+
         findViewById<View>(R.id.navTracking).setOnClickListener {
             // TODO: startActivity(Intent(this, TrackingActivity::class.java))
             Toast.makeText(this, "Pelacakan segera hadir", Toast.LENGTH_SHORT).show()

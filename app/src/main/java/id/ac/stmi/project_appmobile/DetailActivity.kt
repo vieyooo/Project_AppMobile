@@ -13,6 +13,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
+import android.content.Intent
 
 class DetailActivity : AppCompatActivity() {
 
@@ -189,9 +190,6 @@ class DetailActivity : AppCompatActivity() {
         btnLanjut.alpha = 1f
     }
 
-    // ---------------------------------------------------------------
-    // Lanjut ke pemilihan operator
-    // ---------------------------------------------------------------
     private fun lanjutKeOperator() {
         val mulai = tglMulai
         val selesai = tglSelesai
@@ -200,17 +198,16 @@ class DetailActivity : AppCompatActivity() {
             return
         }
 
-        // TODO (Bila): setelah OperatorActivity dibuat, aktifkan kode berikut
-        // val selisihHari = ((selesai - mulai) / MILIDETIK_PER_HARI).toInt()
-        // val jumlahHari = if (selisihHari < 1) 1 else selisihHari
-        // val intent = Intent(this, OperatorActivity::class.java)
-        // intent.putExtra(EXTRA_NAMA_UNIT, namaUnit)
-        // intent.putExtra(EXTRA_TARIF_UNIT, tarifPerHari)
-        // intent.putExtra(EXTRA_TGL_MULAI, formatTanggal(mulai))
-        // intent.putExtra(EXTRA_TGL_SELESAI, formatTanggal(selesai))
-        // intent.putExtra(EXTRA_JUMLAH_HARI, jumlahHari)
-        // startActivity(intent)
-        segeraHadir("Pilih Operator")
+        val selisihHari = ((selesai - mulai) / MILIDETIK_PER_HARI).toInt()
+        val jumlahHari = if (selisihHari < 1) 1 else selisihHari
+
+        val intent = Intent(this, OperatorActivity::class.java)
+        intent.putExtra(EXTRA_NAMA_UNIT, namaUnit)
+        intent.putExtra(EXTRA_TARIF_UNIT, tarifPerHari)
+        intent.putExtra(EXTRA_TGL_MULAI, formatTanggal(mulai))
+        intent.putExtra(EXTRA_TGL_SELESAI, formatTanggal(selesai))
+        intent.putExtra(EXTRA_JUMLAH_HARI, jumlahHari)
+        startActivity(intent)
     }
 
     private fun segeraHadir(fitur: String) {
