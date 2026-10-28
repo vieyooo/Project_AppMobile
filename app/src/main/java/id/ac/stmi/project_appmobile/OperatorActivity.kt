@@ -18,7 +18,7 @@ class OperatorActivity : AppCompatActivity() {
     private var withOperatorMode = true
     private var selectedOperator: Operator? = null
 
-    // id HARUS UNIK
+    // Daftar operator (Budi & Hendra dengan foto masing-masing)
     private val operators = listOf(
         Operator(
             id = 1, name = "Budi Santoso", sio = "1234-5678", hours = "4.2k",
@@ -33,7 +33,7 @@ class OperatorActivity : AppCompatActivity() {
         Operator(
             id = 2, name = "Hendra Wijaya", sio = "5678-9012", hours = "3.6k",
             rating = 4.8, reviews = 84, kelas = "Kelas II", price = 350000,
-            photoRes = null,
+            photoRes = R.drawable.foto_hendra,
             role = "Heavy Equipment Operator  •  Pool B Bekasi",
             sioCode = "#SIO-5678-BKS",
             totalHours = "3.640 Jam",
@@ -61,7 +61,7 @@ class OperatorActivity : AppCompatActivity() {
         binding = ActivityOperatorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Data dari halaman Detail Alat (kalau tidak ada, pakai teks bawaan)
+        // Data dari halaman Detail Alat
         val namaUnit = intent.getStringExtra(DetailActivity.EXTRA_NAMA_UNIT)
         val tglMulai = intent.getStringExtra(DetailActivity.EXTRA_TGL_MULAI)
         val tglSelesai = intent.getStringExtra(DetailActivity.EXTRA_TGL_SELESAI)
@@ -69,14 +69,18 @@ class OperatorActivity : AppCompatActivity() {
         val tarifUnit = intent.getIntExtra(DetailActivity.EXTRA_TARIF_UNIT, 4_500_000)
 
         binding.tvUnitName.text = namaUnit?.uppercase() ?: "EXCAVATOR CAT 336D L"
-        binding.tvDateRange.text =
-            if (tglMulai != null && tglSelesai != null) "$tglMulai - $tglSelesai"
-            else "28 Okt - 04 Nov 2024"
+
+        binding.tvDateRange.text = if (tglMulai != null && tglSelesai != null) {
+            "$tglMulai\n$tglSelesai"
+        } else {
+            "28 Okt - 04 Nov 2024"
+        }
+
         binding.tvWorkDays.text =
             if (jumlahHari > 0) "$jumlahHari HARI KERJA" else "7 HARI KERJA"
 
         // Default sesuai desain: Budi terpilih
-        selectedOperator = operators.first { it.id == 1 }
+        selectedOperator = operators.first { id -> id.id == 1 }
 
         adapter = OperatorAdapter(
             items = operators,
@@ -88,7 +92,6 @@ class OperatorActivity : AppCompatActivity() {
                     putExtra(DetailOperatorActivity.EXTRA_UNIT_NAME, namaUnit ?: "Excavator CAT 336D L")
                     putExtra(DetailOperatorActivity.EXTRA_PACKAGE_TOTAL, hari * (tarifUnit + op.price))
                     putExtra(DetailOperatorActivity.EXTRA_PACKAGE_DAYS, hari)
-
                 }
                 detailLauncher.launch(detailIntent)
             },
@@ -101,21 +104,45 @@ class OperatorActivity : AppCompatActivity() {
 
         binding.btnUnitOnly.setOnClickListener { setMode(false) }
         binding.btnUnitOperator.setOnClickListener { setMode(true) }
-        binding.btnBack.setOnClickListener { finish() }
 
-        // ----- Menu bawah -----
+        // Tombol Konfirmasi Utama (Membawa data operator & status withOperatorMode ke TrackingActivity)
+        binding.btnConfirm.setOnClickListener {
+            val intent = Intent(this, TrackingActivity::class.java).apply {
+                putExtra(TrackingActivity.EXTRA_ORDER_ID, "TR-2024-0891")
+                putExtra("EXTRA_UNIT_NAME", binding.tvUnitName.text.toString())
+                putExtra("EXTRA_DRIVER_NAME", selectedOperator?.name ?: "Budi Santoso")
+                putExtra("EXTRA_DRIVER_ROLE", selectedOperator?.role ?: "Senior Heavy Operator")
+                putExtra("EXTRA_UNIT_TYPE", binding.tvUnitName.text.toString())
+                putExtra("EXTRA_DRIVER_PHOTO", selectedOperator?.photoRes ?: R.drawable.foto_budi)
+                putExtra("EXTRA_WITH_OPERATOR", withOperatorMode) // PENTING: Mengirim status mode
+            }
+            startActivity(intent)
+            finish()
+        }
+
+        // Navigasi Bawah
         binding.navCatalog.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
             finish()
         }
+
         binding.navTracking.setOnClickListener {
-            // TODO: startActivity(Intent(this, TrackingActivity::class.java))
-            Toast.makeText(this, "Pelacakan segera hadir", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, TrackingActivity::class.java).apply {
+                putExtra(TrackingActivity.EXTRA_ORDER_ID, "TR-2024-0891")
+                putExtra("EXTRA_UNIT_NAME", binding.tvUnitName.text.toString())
+                putExtra("EXTRA_DRIVER_NAME", selectedOperator?.name ?: "Budi Santoso")
+                putExtra("EXTRA_DRIVER_ROLE", selectedOperator?.role ?: "Senior Heavy Operator")
+                putExtra("EXTRA_UNIT_TYPE", binding.tvUnitName.text.toString())
+                putExtra("EXTRA_DRIVER_PHOTO", selectedOperator?.photoRes ?: R.drawable.foto_budi)
+                putExtra("EXTRA_WITH_OPERATOR", withOperatorMode) // PENTING: Mengirim status mode
+            }
+            startActivity(intent)
+            finish()
         }
+
         binding.navSettings.setOnClickListener {
-            // TODO: startActivity(Intent(this, SettingsActivity::class.java))
             Toast.makeText(this, "Pengaturan segera hadir", Toast.LENGTH_SHORT).show()
         }
 

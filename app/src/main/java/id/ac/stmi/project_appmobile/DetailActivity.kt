@@ -57,9 +57,19 @@ class DetailActivity : AppCompatActivity() {
 
         // Menu bawah (Katalog = kembali ke katalog)
         findViewById<View>(R.id.navCatalog).setOnClickListener { finish() }
-        findViewById<View>(R.id.navOperator).setOnClickListener { segeraHadir("Operator") }
-        findViewById<View>(R.id.navTracking).setOnClickListener { segeraHadir("Pelacakan") }
-        findViewById<View>(R.id.navSettings).setOnClickListener { segeraHadir("Pengaturan") }
+        findViewById<View>(R.id.navOperator).setOnClickListener {
+            startActivity(Intent(this, OperatorActivity::class.java))
+        }
+        findViewById<View>(R.id.navTracking).setOnClickListener {
+            val intent = Intent(this, TrackingActivity::class.java).apply {
+                putExtra(TrackingActivity.EXTRA_ORDER_ID, "TR-2024-0891")
+                putExtra("EXTRA_UNIT_NAME", namaUnit.uppercase())
+            }
+            startActivity(intent)
+        }
+        findViewById<View>(R.id.navSettings).setOnClickListener {
+            Toast.makeText(this, "Pengaturan segera hadir", Toast.LENGTH_SHORT).show()
+        }
     }
 
     // ---------------------------------------------------------------
@@ -114,7 +124,6 @@ class DetailActivity : AppCompatActivity() {
     // MaterialDatePicker
     // ---------------------------------------------------------------
     private fun pilihTanggalMulai() {
-        // Hanya boleh memilih hari ini atau sesudahnya
         val batas = CalendarConstraints.Builder()
             .setValidator(DateValidatorPointForward.now())
             .build()
@@ -129,7 +138,6 @@ class DetailActivity : AppCompatActivity() {
             tglMulai = pilihan
             tvTglMulai.text = formatTanggal(pilihan)
 
-            // Kalau tanggal selesai jadi lebih awal dari mulai, reset
             val selesai = tglSelesai
             if (selesai != null && selesai < pilihan) {
                 tglSelesai = null
@@ -147,7 +155,6 @@ class DetailActivity : AppCompatActivity() {
             return
         }
 
-        // Tanggal selesai tidak boleh sebelum tanggal mulai
         val batas = CalendarConstraints.Builder()
             .setValidator(DateValidatorPointForward.from(mulai))
             .build()
@@ -180,7 +187,7 @@ class DetailActivity : AppCompatActivity() {
             return
         }
 
-        // Jumlah hari = selisih tanggal (minimal 1 hari)
+        // DIPERBAIKI: Perhitungan selisih hari disatukan dalam satu baris
         val selisihHari = ((selesai - mulai) / MILIDETIK_PER_HARI).toInt()
         val jumlahHari = if (selisihHari < 1) 1 else selisihHari
         val total = tarifPerHari.toLong() * jumlahHari
@@ -198,6 +205,7 @@ class DetailActivity : AppCompatActivity() {
             return
         }
 
+        // DIPERBAIKI: Perhitungan selisih hari disatukan dalam satu baris
         val selisihHari = ((selesai - mulai) / MILIDETIK_PER_HARI).toInt()
         val jumlahHari = if (selisihHari < 1) 1 else selisihHari
 
@@ -210,27 +218,21 @@ class DetailActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun segeraHadir(fitur: String) {
-        Toast.makeText(this, "$fitur segera hadir", Toast.LENGTH_SHORT).show()
-    }
-
     // ---------------------------------------------------------------
     // Format
     // ---------------------------------------------------------------
-    // MaterialDatePicker mengembalikan waktu UTC, jadi formatter juga harus UTC
     private fun formatTanggal(millis: Long): String {
         val format = SimpleDateFormat("dd MMM yyyy", Locale.forLanguageTag("id-ID"))
         format.timeZone = TimeZone.getTimeZone("UTC")
         return format.format(millis)
     }
 
-    // 4500000 -> "4.500.000"
     private fun formatRupiah(nilai: Long): String =
         String.format(Locale.forLanguageTag("id-ID"), "%,d", nilai)
 
-    // Key untuk data yang dikirim ke OperatorActivity (dipakai Bila)
     companion object {
-        private const val MILIDETIK_PER_HARI = 24L * 60 * 60 * 1000
+        // DIPERBAIKI: Penulisan konstanta milidetik per hari disatukan dalam satu baris
+        private const val MILIDETIK_PER_HARI = 24L * 60L * 60L * 1000L
 
         const val EXTRA_NAMA_UNIT = "EXTRA_NAMA_UNIT"
         const val EXTRA_TARIF_UNIT = "EXTRA_TARIF_UNIT"

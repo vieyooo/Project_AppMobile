@@ -34,10 +34,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, OperatorActivity::class.java))
         }
 
+        // Navigasi ke TrackingActivity yang sudah dibuat
         findViewById<View>(R.id.navTracking).setOnClickListener {
-            // TODO: startActivity(Intent(this, TrackingActivity::class.java))
-            Toast.makeText(this, "Pelacakan segera hadir", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, TrackingActivity::class.java))
         }
+
         findViewById<View>(R.id.navSettings).setOnClickListener {
             // TODO: startActivity(Intent(this, SettingsActivity::class.java))
             Toast.makeText(this, "Pengaturan segera hadir", Toast.LENGTH_SHORT).show()

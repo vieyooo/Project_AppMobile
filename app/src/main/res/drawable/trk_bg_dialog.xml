@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Warna latar belakang pop-up (Putih bersih) -->
+    <solid android:color="#FFFFFF" />
+
+    <!-- Membuat sudut pojok pop-up melengkung halus (radius 16dp) -->
+    <corners android:radius="16dp" />
+
+</shape>

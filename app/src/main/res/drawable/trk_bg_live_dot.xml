@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+
+    <!-- Warna titik oranye terang (menandakan status live/aktif) -->
+    <solid android:color="@color/trk_orange" />
+
+</shape>
