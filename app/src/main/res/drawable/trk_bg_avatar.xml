@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+
+    <!-- Warna latar belakang lingkaran avatar (abu-abu terang atau krem lembut) -->
+    <solid android:color="#F0F2F5" />
+
+</shape>

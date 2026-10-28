@@ -9,86 +9,59 @@
     android:orientation="vertical"
     tools:context=".OperatorActivity">
 
-    <!-- ===== BRAND BAR ===== -->
+    <!-- ===== TOP BAR (Kuning selaras dengan halaman Tracking) ===== -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
+        android:background="#FBBF24"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="10dp">
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="14dp">
 
         <com.google.android.material.card.MaterialCardView
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            app:cardBackgroundColor="#8D4B00"
-            app:cardCornerRadius="10dp"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="14dp"
             app:cardElevation="0dp"
             app:strokeWidth="0dp">
 
-            <TextView
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="🛠️"
-                android:textSize="16sp" />
+                android:contentDescription="Logo TitanRent"
+                android:padding="6dp"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/ic_logo" />
         </com.google.android.material.card.MaterialCardView>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="12dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="monospace"
-                android:letterSpacing="0.1"
-                android:text="TITANKRIT GPS"
-                android:textColor="#9A9DA3"
-                android:textSize="8sp" />
+                android:fontFamily="sans-serif-black"
+                android:letterSpacing="0.03"
+                android:text="TITANRENT"
+                android:textColor="#3B2400"
+                android:textSize="24sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
-                android:text="Operator"
-                android:textColor="#191C1E"
-                android:textSize="15sp" />
+                android:fontFamily="monospace"
+                android:letterSpacing="0.06"
+                android:text="SEWA ALAT BERAT &amp; OPERATOR"
+                android:textColor="#7A4A00"
+                android:textSize="9sp" />
         </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="6dp"
-            android:text="🔔"
-            android:textSize="16sp" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="4dp"
-            app:cardBackgroundColor="#8D4B00"
-            app:cardCornerRadius="15dp"
-            app:cardElevation="0dp"
-            app:strokeWidth="0dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="👤"
-                android:textSize="13sp" />
-        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#E9EBEE" />
 
     <!-- ===== KONTEN SCROLL ===== -->
     <androidx.core.widget.NestedScrollView
@@ -103,33 +76,17 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Judul + tombol kembali -->
+            <!-- Judul Header Bagian Atas Langsung dengan Garis Aksen -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/btnBack"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:cardBackgroundColor="#FFFFFF"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp"
-                    app:strokeColor="#E3E5E8"
-                    app:strokeWidth="1dp">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:contentDescription="Kembali"
-                        android:padding="9dp"
-                        android:src="@drawable/outline_arrow_back_ios_24"
-                        app:tint="#191C1E" />
-                </com.google.android.material.card.MaterialCardView>
+                <View
+                    android:layout_width="4dp"
+                    android:layout_height="22dp"
+                    android:background="#8D4B00" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -142,9 +99,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-black"
-                        android:text="Pilih Operator"
+                        android:letterSpacing="0.04"
+                        android:text="PILIH OPERATOR"
                         android:textColor="#191C1E"
-                        android:textSize="16sp" />
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/tvUnitName"
@@ -152,7 +110,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="monospace"
                         android:textColor="#6B6F76"
-                        android:textSize="9sp"
+                        android:textSize="10sp"
                         tools:text="EXCAVATOR CAT 336D L" />
                 </LinearLayout>
 
@@ -296,19 +254,19 @@
 
                     <View
                         android:layout_width="3dp"
-                        android:layout_height="12dp"
+                        android:layout_height="14dp"
                         android:background="#8D4B00" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
+                        android:layout_marginStart="8dp"
                         android:layout_weight="1"
                         android:fontFamily="sans-serif-black"
                         android:letterSpacing="0.06"
                         android:text="OPERATOR TERSEDIA"
                         android:textColor="#191C1E"
-                        android:textSize="10sp" />
+                        android:textSize="11sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -460,7 +418,7 @@
                 android:layout_height="30dp"
                 android:gravity="center"
                 android:text="🏗️"
-                android:textSize="16sp" />
+                android:textSize="17sp" />
 
             <TextView
                 android:layout_width="wrap_content"

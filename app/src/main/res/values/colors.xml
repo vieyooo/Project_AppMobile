@@ -2,4 +2,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="trk_bg">#F8F9FA</color>
+    <color name="trk_white">#FFFFFF</color>
+    <color name="trk_primary">#2196F3</color>
+    <color name="trk_line">#E0E0E0</color>
+    <color name="trk_text_dark">#2C3E50</color>
+    <color name="trk_text_muted">#7F8C8D</color>
+    <color name="trk_orange">#F39C12</color>
+    <color name="trk_blue_text">#2980B9</color>
 </resources>

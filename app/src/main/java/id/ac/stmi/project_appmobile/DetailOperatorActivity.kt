@@ -25,7 +25,7 @@ class DetailOperatorActivity : AppCompatActivity() {
         }
         android.util.Log.d("OPERATOR", "detail terbuka: ${op.name}")
 
-        // ---- Isi data ----
+        // ---- Isi data operator ----
         binding.tvSioCode.text = op.sioCode
         binding.tvName.text = op.name
         binding.tvRole.text = op.role
@@ -46,13 +46,13 @@ class DetailOperatorActivity : AppCompatActivity() {
         val packageDays = intent.getIntExtra(EXTRA_PACKAGE_DAYS, 7)
         binding.tvPackageTitle.text = "PAKET SEWA $packageDays HARI + OPERATOR"
 
-        // Foto: kalau ada drawable tampilkan, kalau tidak pakai emoji
+        // Menampilkan foto operator secara dinamis (Budi / Hendra)
         if (op.photoRes != null) {
             binding.imgHero.setImageResource(op.photoRes)
             binding.tvHeroEmoji.visibility = View.GONE
         }
 
-        // ---- Aksi ----
+        // ---- Aksi Tombol ----
         binding.btnBack.setOnClickListener { finish() }
 
         binding.btnShare.setOnClickListener {
@@ -63,27 +63,38 @@ class DetailOperatorActivity : AppCompatActivity() {
             startActivity(Intent.createChooser(share, "Bagikan operator"))
         }
 
+        // Tombol pilih operator di halaman detail
         binding.btnChoose.setOnClickListener {
             setResult(RESULT_OK, Intent().putExtra(EXTRA_SELECTED_ID, op.id))
             finish()
         }
 
-        // ---- Menu bawah ----
+        // ---- Menu Navigasi Bawah ----
         binding.navCatalog.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
             finish()
         }
+
         binding.navOperator.setOnClickListener {
-            finish()   // kembali ke daftar operator
+            finish() // kembali ke daftar operator
         }
+
+        // Diarahkan langsung ke halaman pelacakan dengan membawa data operator aktif (op)
         binding.navTracking.setOnClickListener {
-            // TODO: startActivity(Intent(this, TrackingActivity::class.java))
-            Toast.makeText(this, "Pelacakan segera hadir", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, TrackingActivity::class.java).apply {
+                putExtra(TrackingActivity.EXTRA_ORDER_ID, "TR-2024-0891")
+                putExtra("EXTRA_UNIT_NAME", unitName)
+                putExtra("EXTRA_DRIVER_NAME", op.name)
+                putExtra("EXTRA_DRIVER_ROLE", op.role)
+                putExtra("EXTRA_DRIVER_PHOTO", op.photoRes ?: R.drawable.foto_budi)
+            }
+            startActivity(intent)
+            finish()
         }
+
         binding.navSettings.setOnClickListener {
-            // TODO: startActivity(Intent(this, SettingsActivity::class.java))
             Toast.makeText(this, "Pengaturan segera hadir", Toast.LENGTH_SHORT).show()
         }
     }
