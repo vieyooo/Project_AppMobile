@@ -9,7 +9,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import id.ac.stmi.project_appmobile.databinding.ActivityOperatorBinding
-import android.widget.Toast
 
 class OperatorActivity : AppCompatActivity() {
 
@@ -143,7 +142,7 @@ class OperatorActivity : AppCompatActivity() {
         }
 
         binding.navSettings.setOnClickListener {
-            Toast.makeText(this, "Pengaturan segera hadir", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, SettingsActivity::class.java))
         }
 
         setMode(true)

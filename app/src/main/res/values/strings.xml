@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Project_AppMobile</string>
+
+    <!-- Options Menu (titik tiga) di MainActivity -->
+    <string name="menu_settings">Settings</string>
+    <string name="menu_profile">Profil</string>
+    <string name="menu_help">Bantuan</string>
+    <string name="menu_logout">Logout</string>
 </resources>

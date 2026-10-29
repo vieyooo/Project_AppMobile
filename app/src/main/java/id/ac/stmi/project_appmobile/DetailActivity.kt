@@ -64,11 +64,14 @@ class DetailActivity : AppCompatActivity() {
             val intent = Intent(this, TrackingActivity::class.java).apply {
                 putExtra(TrackingActivity.EXTRA_ORDER_ID, "TR-2024-0891")
                 putExtra("EXTRA_UNIT_NAME", namaUnit.uppercase())
+                // Dari Detail belum ada operator terpilih -> mode "Tanpa Operator"
+                // (nama driver & nomor telepon terisi otomatis di TrackingActivity)
+                putExtra("EXTRA_WITH_OPERATOR", false)
             }
             startActivity(intent)
         }
         findViewById<View>(R.id.navSettings).setOnClickListener {
-            Toast.makeText(this, "Pengaturan segera hadir", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, SettingsActivity::class.java))
         }
     }
 

@@ -60,6 +60,7 @@ class TrackingActivity : AppCompatActivity() {
     private lateinit var tvEtaRemaining: TextView
     private lateinit var progress: LinearProgressIndicator
     private lateinit var viewLiveDot: View
+    private lateinit var btnChecklistK3: View
 
     private val ticker = object : Runnable {
         override fun run() {
@@ -101,6 +102,12 @@ class TrackingActivity : AppCompatActivity() {
         tvEtaRemaining = findViewById(R.id.tvEtaRemaining)
         progress = findViewById(R.id.progressDelivery)
         viewLiveDot = findViewById(R.id.viewLiveDot)
+        btnChecklistK3 = findViewById(R.id.btnChecklistK3)
+        btnChecklistK3.setOnClickListener {
+            startActivity(Intent(this, ChecklistK3Activity::class.java).apply {
+                putExtra(ChecklistK3Activity.EXTRA_UNIT_NAME, activeUnitName)
+            })
+        }
 
         // Cek apakah halaman dibuka dengan membawa data unit yang valid
         val unitNameExtra = intent.getStringExtra("EXTRA_UNIT_NAME")
@@ -193,7 +200,6 @@ class TrackingActivity : AppCompatActivity() {
             updateEta()
         }
 
-        findViewById<View>(R.id.btnBack)?.setOnClickListener { finish() }
 
         findViewById<View>(R.id.btnContactDispatch).setOnClickListener { showDriverDialog() }
         findViewById<View>(R.id.cardDriver).setOnClickListener { showDriverDialog() }
@@ -235,7 +241,7 @@ class TrackingActivity : AppCompatActivity() {
             finish()
         }
         findViewById<View>(R.id.navSettings).setOnClickListener {
-            Toast.makeText(this, "Pengaturan segera hadir", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, SettingsActivity::class.java))
         }
     }
 
@@ -299,6 +305,10 @@ class TrackingActivity : AppCompatActivity() {
 
         updateStatusChip(currentStage)
         buildStepper()
+
+        // Checklist K3 hanya relevan setelah unit tiba di lokasi (ARRIVED)
+        btnChecklistK3.visibility =
+            if (hasActiveOrder && currentStage == steps.size) View.VISIBLE else View.GONE
     }
 
     private fun buildStepper() {

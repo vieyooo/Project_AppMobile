@@ -3,7 +3,6 @@ package id.ac.stmi.project_appmobile
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import id.ac.stmi.project_appmobile.databinding.ActivityDetailOperatorBinding
 
@@ -95,7 +94,7 @@ class DetailOperatorActivity : AppCompatActivity() {
         }
 
         binding.navSettings.setOnClickListener {
-            Toast.makeText(this, "Pengaturan segera hadir", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, SettingsActivity::class.java))
         }
     }
 

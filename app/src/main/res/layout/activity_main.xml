@@ -63,6 +63,15 @@
                 android:textColor="#7A4A00"
                 android:textSize="9sp" />
         </LinearLayout>
+
+        <!-- Toolbar transparan: hanya dipakai sebagai tempat Options Menu (titik tiga) -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:background="@android:color/transparent"
+            android:minHeight="48dp"
+            android:theme="@style/ThemeOverlay.TitanRent.Toolbar" />
     </LinearLayout>
 
     <!-- ===== SHEET: menimpa top bar sehingga tepinya melengkung ===== -->

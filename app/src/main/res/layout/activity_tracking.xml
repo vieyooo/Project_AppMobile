@@ -439,6 +439,22 @@
                 app:iconGravity="textStart"
                 app:iconTint="@color/trk_white" />
 
+            <!-- Tombol Checklist K3 (muncul saat status ARRIVED) -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnChecklistK3"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginTop="12dp"
+                android:text="ISI CHECKLIST K3"
+                android:textColor="@color/trk_white"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:backgroundTint="@color/trk_orange"
+                app:cornerRadius="14dp"
+                app:icon="@drawable/trk_ic_info"
+                app:iconGravity="textStart"
+                app:iconTint="@color/trk_white" />
+
             <!-- Banner info K3 -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -460,7 +476,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="Checklist K3 otomatis dibuka setelah unit tiba di lokasi!"
+                    android:text="Tombol Checklist K3 akan muncul setelah unit tiba di lokasi!"
                     android:textColor="@color/trk_blue_text"
                     android:textSize="11sp" />
             </LinearLayout>
