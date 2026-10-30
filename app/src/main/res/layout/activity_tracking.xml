@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAF8F5"
+    android:background="#FFFAF0"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".TrackingActivity">
 
-    <!-- ===== TOP BAR (Bersih dari Chip) ===== -->
+    <!-- ===== TOP BAR (kuning) ===== -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +17,8 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingHorizontal="20dp"
-        android:paddingVertical="14dp">
+        android:paddingTop="14dp"
+        android:paddingBottom="34dp">
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="46dp"
@@ -63,432 +64,453 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- ============ ISI (SCROLL) ============ -->
-    <androidx.core.widget.NestedScrollView
+    <!-- ===== SHEET (menimpa top bar, tepi melengkung) ===== -->
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="-24dp"
         android:layout_weight="1"
-        android:fillViewport="true">
+        app:cardBackgroundColor="#FFFAF0"
+        app:cardCornerRadius="28dp"
+        app:cardElevation="0dp"
+        app:strokeWidth="0dp">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none">
 
-            <!-- Judul Halaman + Chip Status Dipindah ke Sini -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="14dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <View
-                    android:layout_width="4dp"
-                    android:layout_height="22dp"
-                    android:background="#8D4B00" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="PELACAKAN UNIT"
-                        android:textColor="#191C1E"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvOrderId"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="monospace"
-                        android:text="STATUS REAL-TIME • BELUM ADA PESANAN"
-                        android:textColor="#6B6F76"
-                        android:textSize="10sp" />
-                </LinearLayout>
-
-                <!-- Status Chip (Dipindah ke Samping Judul) -->
-                <TextView
-                    android:id="@+id/tvStatusChip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/trk_bg_chip_transit"
-                    android:fontFamily="monospace"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="5dp"
-                    android:text="-"
-                    android:textColor="#191C1E"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <!-- Kartu unit -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/trk_bg_card"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="12dp">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    app:cardBackgroundColor="@color/trk_primary"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp"
-                    app:strokeWidth="0dp">
-
-                    <ImageView
-                        android:id="@+id/ivUnit"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:contentDescription="Foto unit"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_logo" />
-                </com.google.android.material.card.MaterialCardView>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tvUnitName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Belum Ada Unit Dipilih"
-                        android:textColor="#191C1E"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvUnitLocation"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:drawableStart="@drawable/trk_ic_pin"
-                        android:drawablePadding="4dp"
-                        android:drawableTint="@color/trk_primary"
-                        android:text="Silakan pilih unit &amp; operator"
-                        android:textColor="#6B6F76"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/trk_bg_date_box"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="8dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="monospace"
-                        android:text="TGL SEWA"
-                        android:textColor="#6B6F76"
-                        android:textSize="8sp" />
-
-                    <TextView
-                        android:id="@+id/tvRentDate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="-"
-                        android:textColor="@color/trk_primary"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- Kartu progres -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/trk_bg_card"
                 android:orientation="vertical"
-                android:padding="14dp">
+                android:padding="20dp">
 
+                <!-- Judul halaman + chip status -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="14dp"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tvStageLabel"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="monospace"
-                        android:text="TAHAP 0 DARI 4"
-                        android:textColor="#6B6F76"
-                        android:textSize="11sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvPercent"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="monospace"
-                        android:text="0%"
-                        android:textColor="@color/trk_primary"
-                        android:textSize="11sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <com.google.android.material.progressindicator.LinearProgressIndicator
-                    android:id="@+id/progressDelivery"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:max="100"
-                    android:progress="0"
-                    app:indicatorColor="@color/trk_primary"
-                    app:trackColor="@color/trk_line"
-                    app:trackCornerRadius="4dp"
-                    app:trackThickness="8dp" />
-            </LinearLayout>
-
-            <!-- Judul status -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <View
-                    android:layout_width="4dp"
-                    android:layout_height="16dp"
-                    android:background="@color/trk_primary" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    android:fontFamily="monospace"
-                    android:text="STATUS PENGIRIMAN"
-                    android:textColor="#191C1E"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-                <View
-                    android:id="@+id/viewLiveDot"
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:background="@drawable/trk_bg_live_dot" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:fontFamily="monospace"
-                    android:text="LIVE SIMULASI"
-                    android:textColor="@color/trk_orange"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <!-- Stepper -->
-            <LinearLayout
-                android:id="@+id/stepContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/trk_bg_card"
-                android:orientation="vertical"
-                android:padding="10dp" />
-
-            <!-- ETA + Driver -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:orientation="horizontal">
-
-                <!-- Kartu Estimasi Tiba -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/trk_bg_card"
-                    android:orientation="vertical"
-                    android:padding="14dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="monospace"
-                        android:text="ESTIMASI TIBA"
-                        android:textColor="#6B6F76"
-                        android:textSize="9sp" />
-
-                    <TextView
-                        android:id="@+id/tvEtaTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="-"
-                        android:textColor="#191C1E"
-                        android:textSize="26sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvEtaRemaining"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:drawableStart="@drawable/trk_ic_clock"
-                        android:drawablePadding="4dp"
-                        android:drawableTint="@color/trk_orange"
-                        android:text="Belum ada pengiriman terpilih"
-                        android:textColor="@color/trk_orange"
-                        android:textSize="11sp" />
-                </LinearLayout>
-
-                <!-- Kartu Driver / Ekspedisi -->
-                <LinearLayout
-                    android:id="@+id/cardDriver"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="1.35"
-                    android:background="@drawable/trk_bg_card"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <ImageView
-                        android:layout_width="38dp"
-                        android:layout_height="38dp"
-                        android:background="@drawable/trk_bg_avatar"
-                        android:contentDescription="Foto driver"
-                        android:padding="8dp"
-                        android:src="@drawable/trk_ic_person"
-                        app:tint="@color/trk_primary" />
+                    <View
+                        android:layout_width="4dp"
+                        android:layout_height="22dp"
+                        android:background="#8D4B00" />
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/tvDriverShort"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:text="Pilih Operator"
-                            android:textColor="#191C1E"
-                            android:textSize="12sp"
+                            android:fontFamily="sans-serif-black"
+                            android:text="PELACAKAN UNIT"
+                            android:textColor="#3B2400"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/tvOrderId"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:text="STATUS REAL-TIME • BELUM ADA PESANAN"
+                            android:textColor="#8A7A5C"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvStatusChip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/trk_bg_chip_transit"
+                        android:fontFamily="monospace"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="5dp"
+                        android:text="-"
+                        android:textColor="#3B2400"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Kartu unit -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/trk_bg_card"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        app:cardBackgroundColor="@color/trk_primary"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="0dp">
+
+                        <ImageView
+                            android:id="@+id/ivUnit"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:contentDescription="Foto unit"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_logo" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvUnitName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-black"
+                            android:text="Belum Ada Unit Dipilih"
+                            android:textColor="#3B2400"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/tvUnitLocation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:drawableStart="@drawable/trk_ic_pin"
+                            android:drawablePadding="4dp"
+                            android:drawableTint="@color/trk_primary"
+                            android:text="Silakan pilih unit &amp; operator"
+                            android:textColor="#8A7A5C"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/trk_bg_date_box"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:letterSpacing="0.06"
+                            android:text="TGL SEWA"
+                            android:textColor="#8A7A5C"
+                            android:textSize="9sp" />
+
+                        <TextView
+                            android:id="@+id/tvRentDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-black"
+                            android:text="-"
+                            android:textColor="@color/trk_primary"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Kartu progres -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/trk_bg_card"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvStageLabel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="monospace"
+                            android:letterSpacing="0.06"
+                            android:text="TAHAP 0 DARI 4"
+                            android:textColor="#8A7A5C"
+                            android:textSize="11sp"
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/tvDriverVehicle"
-                            android:layout_width="match_parent"
+                            android:id="@+id/tvPercent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:ellipsize="end"
                             android:fontFamily="monospace"
-                            android:maxLines="1"
-                            android:text="---"
-                            android:textColor="#6B6F76"
-                            android:textSize="9sp" />
+                            android:text="0%"
+                            android:textColor="@color/trk_primary"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
-                    <ImageButton
-                        android:id="@+id/btnCallQuick"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginStart="4dp"
-                        android:background="@drawable/trk_bg_circle_primary"
-                        android:contentDescription="Hubungi driver"
-                        android:padding="7dp"
-                        android:src="@drawable/trk_ic_phone"
-                        app:tint="@color/trk_white" />
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/progressDelivery"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:max="100"
+                        android:progress="0"
+                        app:indicatorColor="@color/trk_primary"
+                        app:trackColor="@color/trk_line"
+                        app:trackCornerRadius="4dp"
+                        app:trackThickness="8dp" />
+                </LinearLayout>
+
+                <!-- Judul status -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="4dp"
+                        android:layout_height="16dp"
+                        android:background="@color/trk_primary" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:fontFamily="monospace"
+                        android:letterSpacing="0.08"
+                        android:text="STATUS PENGIRIMAN"
+                        android:textColor="#7A4A00"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:id="@+id/viewLiveDot"
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:background="@drawable/trk_bg_live_dot" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:fontFamily="monospace"
+                        android:text="LIVE SIMULASI"
+                        android:textColor="@color/trk_orange"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Stepper -->
+                <LinearLayout
+                    android:id="@+id/stepContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/trk_bg_card"
+                    android:orientation="vertical"
+                    android:padding="10dp" />
+
+                <!-- ETA + Driver -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <!-- Kartu Estimasi Tiba -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/trk_bg_card"
+                        android:orientation="vertical"
+                        android:padding="14dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:letterSpacing="0.06"
+                            android:text="ESTIMASI TIBA"
+                            android:textColor="#8A7A5C"
+                            android:textSize="9sp" />
+
+                        <TextView
+                            android:id="@+id/tvEtaTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:fontFamily="sans-serif-black"
+                            android:text="-"
+                            android:textColor="#3B2400"
+                            android:textSize="26sp" />
+
+                        <TextView
+                            android:id="@+id/tvEtaRemaining"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:drawableStart="@drawable/trk_ic_clock"
+                            android:drawablePadding="4dp"
+                            android:drawableTint="@color/trk_orange"
+                            android:text="Belum ada pengiriman terpilih"
+                            android:textColor="@color/trk_orange"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+
+                    <!-- Kartu Driver / Ekspedisi -->
+                    <LinearLayout
+                        android:id="@+id/cardDriver"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1.35"
+                        android:background="@drawable/trk_bg_card"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:background="@drawable/trk_bg_avatar"
+                            android:contentDescription="Foto driver"
+                            android:padding="8dp"
+                            android:src="@drawable/trk_ic_person"
+                            app:tint="@color/trk_primary" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvDriverShort"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:fontFamily="sans-serif-black"
+                                android:maxLines="1"
+                                android:text="Pilih Operator"
+                                android:textColor="#3B2400"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/tvDriverVehicle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:fontFamily="monospace"
+                                android:maxLines="1"
+                                android:text="---"
+                                android:textColor="#8A7A5C"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <ImageButton
+                            android:id="@+id/btnCallQuick"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_marginStart="4dp"
+                            android:background="@drawable/trk_bg_circle_primary"
+                            android:contentDescription="Hubungi driver"
+                            android:padding="7dp"
+                            android:src="@drawable/trk_ic_phone"
+                            app:tint="@color/trk_white" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Tombol utama -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnContactDispatch"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="sans-serif-black"
+                    android:letterSpacing="0.04"
+                    android:text="HUBUNGI DISPATCH"
+                    android:textColor="@color/trk_white"
+                    app:backgroundTint="@color/trk_primary"
+                    app:cornerRadius="16dp"
+                    app:elevation="2dp"
+                    app:icon="@drawable/trk_ic_phone"
+                    app:iconGravity="textStart"
+                    app:iconTint="@color/trk_white" />
+
+                <!-- Tombol Checklist K3 (muncul saat status ARRIVED) -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnChecklistK3"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="sans-serif-black"
+                    android:letterSpacing="0.04"
+                    android:text="ISI CHECKLIST K3"
+                    android:textColor="@color/trk_white"
+                    android:visibility="gone"
+                    app:backgroundTint="@color/trk_orange"
+                    app:cornerRadius="16dp"
+                    app:elevation="2dp"
+                    app:icon="@drawable/trk_ic_info"
+                    app:iconGravity="textStart"
+                    app:iconTint="@color/trk_white" />
+
+                <!-- Banner info K3 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/trk_bg_banner"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/trk_ic_info"
+                        app:tint="@color/trk_blue_text" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:text="Tombol Checklist K3 akan muncul setelah unit tiba di lokasi!"
+                        android:textColor="@color/trk_blue_text"
+                        android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </com.google.android.material.card.MaterialCardView>
 
-            <!-- Tombol utama -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnContactDispatch"
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:layout_marginTop="16dp"
-                android:text="HUBUNGI DISPATCH"
-                android:textColor="@color/trk_white"
-                android:textStyle="bold"
-                app:backgroundTint="@color/trk_primary"
-                app:cornerRadius="14dp"
-                app:icon="@drawable/trk_ic_phone"
-                app:iconGravity="textStart"
-                app:iconTint="@color/trk_white" />
-
-            <!-- Tombol Checklist K3 (muncul saat status ARRIVED) -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnChecklistK3"
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:layout_marginTop="12dp"
-                android:text="ISI CHECKLIST K3"
-                android:textColor="@color/trk_white"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:backgroundTint="@color/trk_orange"
-                app:cornerRadius="14dp"
-                app:icon="@drawable/trk_ic_info"
-                app:iconGravity="textStart"
-                app:iconTint="@color/trk_white" />
-
-            <!-- Banner info K3 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/trk_bg_banner"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:importantForAccessibility="no"
-                    android:src="@drawable/trk_ic_info"
-                    app:tint="@color/trk_blue_text" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="Tombol Checklist K3 akan muncul setelah unit tiba di lokasi!"
-                    android:textColor="@color/trk_blue_text"
-                    android:textSize="11sp" />
-            </LinearLayout>
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-
-    <!-- ============ BOTTOM NAVIGATION ============ -->
+    <!-- ===== BOTTOM NAVIGATION ===== -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
-        android:elevation="10dp"
         android:orientation="horizontal"
         android:paddingVertical="6dp">
 
@@ -507,15 +529,15 @@
                 android:layout_height="30dp"
                 android:gravity="center"
                 android:text="🏗️"
-                android:textSize="17sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:text="Katalog"
-                android:textColor="#8A7A5C"
-                android:textSize="11sp" />
+                android:textColor="#6B6F76"
+                android:textSize="10sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -533,15 +555,15 @@
                 android:layout_height="30dp"
                 android:gravity="center"
                 android:text="👷"
-                android:textSize="17sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:text="Operator"
-                android:textColor="#8A7A5C"
-                android:textSize="11sp" />
+                android:textColor="#6B6F76"
+                android:textSize="10sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -566,7 +588,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="🚚"
-                    android:textSize="17sp" />
+                    android:textSize="16sp" />
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
@@ -575,7 +597,7 @@
                 android:layout_marginTop="2dp"
                 android:text="Pelacakan"
                 android:textColor="#8D4B00"
-                android:textSize="11sp"
+                android:textSize="10sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -594,15 +616,15 @@
                 android:layout_height="30dp"
                 android:gravity="center"
                 android:text="⚙️"
-                android:textSize="17sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:text="Lainnya"
-                android:textColor="#8A7A5C"
-                android:textSize="11sp" />
+                android:textColor="#6B6F76"
+                android:textSize="10sp" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

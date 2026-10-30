@@ -4,46 +4,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F7F9FB"
+    android:background="#FFFAF0"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".DetailOperatorActivity">
 
-    <!-- ===== HEADER ===== -->
+    <!-- ===== HEADER (kuning) ===== -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
+        android:background="#FBBF24"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingHorizontal="16dp"
-        android:paddingVertical="10dp">
+        android:paddingTop="10dp"
+        android:paddingBottom="34dp">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/btnBack"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:clickable="true"
+            android:contentDescription="Kembali"
             android:focusable="true"
             app:cardBackgroundColor="#FFFFFF"
-            app:cardCornerRadius="16dp"
+            app:cardCornerRadius="24dp"
             app:cardElevation="0dp"
-            app:strokeColor="#E3E5E8"
-            app:strokeWidth="1dp">
+            app:strokeWidth="0dp">
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="Kembali"
-                android:padding="9dp"
-                android:src="@drawable/outline_arrow_back_ios_24"
-                app:tint="#191C1E" />
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:importantForAccessibility="no"
+                android:paddingLeft="11dp"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/outline_arrow_back_ios_24"
+                app:tint="#3B2400" />
         </com.google.android.material.card.MaterialCardView>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="12dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -58,14 +62,14 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-black"
                     android:text="Detail Operator"
-                    android:textColor="#191C1E"
-                    android:textSize="15sp" />
+                    android:textColor="#3B2400"
+                    android:textSize="20sp" />
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    app:cardBackgroundColor="#EDEEF0"
+                    app:cardBackgroundColor="#FFFFFF"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="0dp"
                     app:strokeWidth="0dp">
@@ -76,8 +80,8 @@
                         android:paddingHorizontal="6dp"
                         android:paddingVertical="2dp"
                         android:text="🟠 TERSEDIA"
-                        android:textColor="#6B6F76"
-                        android:textSize="7sp"
+                        android:textColor="#7A4A00"
+                        android:textSize="8sp"
                         android:textStyle="bold" />
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
@@ -87,149 +91,163 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
-                android:textColor="#6B6F76"
-                android:textSize="8sp"
+                android:letterSpacing="0.06"
+                android:textColor="#7A4A00"
+                android:textSize="9sp"
                 tools:text="#SIO-1234-JKT" />
         </LinearLayout>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/btnShare"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:clickable="true"
+            android:contentDescription="Bagikan"
             android:focusable="true"
             app:cardBackgroundColor="#FFFFFF"
-            app:cardCornerRadius="16dp"
+            app:cardCornerRadius="24dp"
             app:cardElevation="0dp"
-            app:strokeColor="#E3E5E8"
-            app:strokeWidth="1dp">
+            app:strokeWidth="0dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:importantForAccessibility="no"
                 android:text="🔗"
-                android:textSize="13sp" />
+                android:textSize="16sp" />
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#E9EBEE" />
-
-    <!-- ===== KONTEN SCROLL ===== -->
-    <androidx.core.widget.NestedScrollView
+    <!-- ===== SHEET (menimpa header, tepi melengkung) ===== -->
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_marginTop="-24dp"
+        android:layout_weight="1"
+        app:cardBackgroundColor="#FFFAF0"
+        app:cardCornerRadius="28dp"
+        app:cardElevation="0dp"
+        app:strokeWidth="0dp">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <!-- Foto hero -->
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="190dp"
-                android:background="#C9CED6">
-
-                <ImageView
-                    android:id="@+id/imgHero"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:contentDescription="Foto operator"
-                    android:scaleType="centerCrop" />
-
-                <TextView
-                    android:id="@+id/tvHeroEmoji"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="👷"
-                    android:textSize="64sp" />
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="top|start"
-                    android:layout_margin="12dp"
-                    app:cardBackgroundColor="#B3191C1E"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="0dp"
-                    app:strokeWidth="0dp">
-
-                    <TextView
-                        android:id="@+id/tvKelasBadge"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingHorizontal="8dp"
-                        android:paddingVertical="4dp"
-                        android:text="🛡️ SIO KELAS I (KEMNAKER RI)"
-                        android:textColor="#FFFFFF"
-                        android:textSize="7sp"
-                        android:textStyle="bold" />
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|start"
-                    android:layout_margin="12dp"
-                    app:cardBackgroundColor="#B3191C1E"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="0dp"
-                    app:strokeWidth="0dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingHorizontal="8dp"
-                        android:paddingVertical="4dp"
-                        android:text="🚜 CAT Excavator &amp; Dozer"
-                        android:textColor="#FFFFFF"
-                        android:textSize="7sp"
-                        android:textStyle="bold" />
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
-                    android:layout_margin="12dp"
-                    app:cardBackgroundColor="#B3191C1E"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="0dp"
-                    app:strokeWidth="0dp">
-
-                    <TextView
-                        android:id="@+id/tvHeroHours"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingHorizontal="8dp"
-                        android:paddingVertical="4dp"
-                        android:textColor="#FFFFFF"
-                        android:textSize="7sp"
-                        android:textStyle="bold"
-                        tools:text="🕒 4.200+ Jam" />
-                </com.google.android.material.card.MaterialCardView>
-            </FrameLayout>
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="20dp">
+
+                <!-- Foto hero -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="190dp"
+                    android:layout_marginTop="8dp"
+                    app:cardBackgroundColor="#C9CED6"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="#F0E3C4"
+                    app:strokeWidth="1dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/imgHero"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:contentDescription="Foto operator"
+                            android:scaleType="centerCrop" />
+
+                        <TextView
+                            android:id="@+id/tvHeroEmoji"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="👷"
+                            android:textSize="64sp" />
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="top|start"
+                            android:layout_margin="12dp"
+                            app:cardBackgroundColor="#B33B2400"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0dp"
+                            app:strokeWidth="0dp">
+
+                            <TextView
+                                android:id="@+id/tvKelasBadge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="8dp"
+                                android:paddingVertical="4dp"
+                                android:text="🛡️ SIO KELAS I (KEMNAKER RI)"
+                                android:textColor="#FFFFFF"
+                                android:textSize="9sp"
+                                android:textStyle="bold" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|start"
+                            android:layout_margin="12dp"
+                            app:cardBackgroundColor="#B33B2400"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0dp"
+                            app:strokeWidth="0dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="8dp"
+                                android:paddingVertical="4dp"
+                                android:text="🚜 CAT Excavator &amp; Dozer"
+                                android:textColor="#FFFFFF"
+                                android:textSize="9sp"
+                                android:textStyle="bold" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|end"
+                            android:layout_margin="12dp"
+                            app:cardBackgroundColor="#B33B2400"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0dp"
+                            app:strokeWidth="0dp">
+
+                            <TextView
+                                android:id="@+id/tvHeroHours"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingHorizontal="8dp"
+                                android:paddingVertical="4dp"
+                                android:textColor="#FFFFFF"
+                                android:textSize="9sp"
+                                android:textStyle="bold"
+                                tools:text="🕒 4.200+ Jam" />
+                        </com.google.android.material.card.MaterialCardView>
+                    </FrameLayout>
+                </com.google.android.material.card.MaterialCardView>
 
                 <!-- Nama + harga -->
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
                     app:cardBackgroundColor="#FFFFFF"
-                    app:cardCornerRadius="14dp"
+                    app:cardCornerRadius="20dp"
                     app:cardElevation="0dp"
-                    app:strokeColor="#E3E5E8"
+                    app:strokeColor="#F0E3C4"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -237,7 +255,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="14dp">
+                        android:padding="18dp">
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -256,8 +274,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="sans-serif-black"
-                                    android:textColor="#191C1E"
-                                    android:textSize="15sp"
+                                    android:textColor="#3B2400"
+                                    android:textSize="18sp"
                                     tools:text="Budi Santoso" />
 
                                 <TextView
@@ -265,7 +283,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="4dp"
                                     android:text="✔️"
-                                    android:textSize="11sp" />
+                                    android:textSize="12sp" />
                             </LinearLayout>
 
                             <TextView
@@ -273,14 +291,15 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:textColor="#6B6F76"
-                                android:textSize="9sp"
+                                android:textColor="#8A7A5C"
+                                android:textSize="11sp"
                                 tools:text="Senior Heavy Operator  •  Pool A Karawang" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
                             android:gravity="end"
                             android:orientation="vertical">
 
@@ -290,16 +309,17 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="sans-serif-black"
                                 android:textColor="#8D4B00"
-                                android:textSize="15sp"
+                                android:textSize="16sp"
                                 tools:text="Rp 350.000" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="monospace"
+                                android:letterSpacing="0.06"
                                 android:text="/ HARI KERJA"
-                                android:textColor="#6B6F76"
-                                android:textSize="8sp" />
+                                android:textColor="#8A7A5C"
+                                android:textSize="9sp" />
                         </LinearLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -308,7 +328,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="12dp"
                     android:orientation="horizontal">
 
                     <com.google.android.material.card.MaterialCardView
@@ -317,9 +337,9 @@
                         android:layout_marginEnd="4dp"
                         android:layout_weight="1"
                         app:cardBackgroundColor="#FFFFFF"
-                        app:cardCornerRadius="12dp"
+                        app:cardCornerRadius="16dp"
                         app:cardElevation="0dp"
-                        app:strokeColor="#E3E5E8"
+                        app:strokeColor="#F0E3C4"
                         app:strokeWidth="1dp">
 
                         <LinearLayout
@@ -327,22 +347,23 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
                             android:orientation="vertical"
-                            android:padding="10dp">
+                            android:padding="12dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="🕒"
-                                android:textSize="14sp" />
+                                android:textSize="16sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
                                 android:fontFamily="monospace"
+                                android:letterSpacing="0.06"
                                 android:text="JAM TERBANG"
-                                android:textColor="#6B6F76"
-                                android:textSize="7sp" />
+                                android:textColor="#8A7A5C"
+                                android:textSize="9sp" />
 
                             <TextView
                                 android:id="@+id/tvStatHours"
@@ -350,8 +371,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
                                 android:fontFamily="sans-serif-black"
-                                android:textColor="#191C1E"
-                                android:textSize="11sp"
+                                android:textColor="#3B2400"
+                                android:textSize="13sp"
                                 tools:text="4.280 Jam" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
@@ -362,9 +383,9 @@
                         android:layout_marginHorizontal="4dp"
                         android:layout_weight="1"
                         app:cardBackgroundColor="#FFFFFF"
-                        app:cardCornerRadius="12dp"
+                        app:cardCornerRadius="16dp"
                         app:cardElevation="0dp"
-                        app:strokeColor="#E3E5E8"
+                        app:strokeColor="#F0E3C4"
                         app:strokeWidth="1dp">
 
                         <LinearLayout
@@ -372,22 +393,23 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
                             android:orientation="vertical"
-                            android:padding="10dp">
+                            android:padding="12dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="⭐"
-                                android:textSize="14sp" />
+                                android:textSize="16sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
                                 android:fontFamily="monospace"
+                                android:letterSpacing="0.06"
                                 android:text="RATING"
-                                android:textColor="#6B6F76"
-                                android:textSize="7sp" />
+                                android:textColor="#8A7A5C"
+                                android:textSize="9sp" />
 
                             <TextView
                                 android:id="@+id/tvStatRating"
@@ -395,8 +417,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
                                 android:fontFamily="sans-serif-black"
-                                android:textColor="#191C1E"
-                                android:textSize="11sp"
+                                android:textColor="#3B2400"
+                                android:textSize="13sp"
                                 tools:text="4.9 / 5.0" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
@@ -407,9 +429,9 @@
                         android:layout_marginStart="4dp"
                         android:layout_weight="1"
                         app:cardBackgroundColor="#FFFFFF"
-                        app:cardCornerRadius="12dp"
+                        app:cardCornerRadius="16dp"
                         app:cardElevation="0dp"
-                        app:strokeColor="#E3E5E8"
+                        app:strokeColor="#F0E3C4"
                         app:strokeWidth="1dp">
 
                         <LinearLayout
@@ -417,22 +439,23 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
                             android:orientation="vertical"
-                            android:padding="10dp">
+                            android:padding="12dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="🏅"
-                                android:textSize="14sp" />
+                                android:textSize="16sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
                                 android:fontFamily="monospace"
+                                android:letterSpacing="0.06"
                                 android:text="PENGALAMAN"
-                                android:textColor="#6B6F76"
-                                android:textSize="7sp" />
+                                android:textColor="#8A7A5C"
+                                android:textSize="9sp" />
 
                             <TextView
                                 android:id="@+id/tvStatExperience"
@@ -440,8 +463,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
                                 android:fontFamily="sans-serif-black"
-                                android:textColor="#191C1E"
-                                android:textSize="11sp"
+                                android:textColor="#3B2400"
+                                android:textSize="13sp"
                                 tools:text="8+ Tahun" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
@@ -451,11 +474,11 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="12dp"
                     app:cardBackgroundColor="#FFFFFF"
-                    app:cardCornerRadius="12dp"
+                    app:cardCornerRadius="16dp"
                     app:cardElevation="0dp"
-                    app:strokeColor="#E3E5E8"
+                    app:strokeColor="#F0E3C4"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -463,11 +486,11 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="12dp">
+                        android:padding="14dp">
 
                         <com.google.android.material.card.MaterialCardView
-                            android:layout_width="34dp"
-                            android:layout_height="34dp"
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
                             app:cardBackgroundColor="#E4EEF7"
                             app:cardCornerRadius="10dp"
                             app:cardElevation="0dp"
@@ -478,7 +501,7 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:text="🛡️"
-                                android:textSize="15sp" />
+                                android:textSize="16sp" />
                         </com.google.android.material.card.MaterialCardView>
 
                         <LinearLayout
@@ -491,24 +514,25 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif-black"
+                                android:fontFamily="sans-serif-medium"
                                 android:text="SIO Kemnaker RI Terverifikasi"
-                                android:textColor="#191C1E"
-                                android:textSize="10sp" />
+                                android:textColor="#3B2400"
+                                android:textSize="13sp" />
 
                             <TextView
                                 android:id="@+id/tvSioDesc"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="1dp"
-                                android:textColor="#6B6F76"
-                                android:textSize="8sp"
+                                android:textColor="#8A7A5C"
+                                android:textSize="11sp"
                                 tools:text="Reg. Reguler Kelas 1 Alat Berat" />
                         </LinearLayout>
 
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
                             app:cardBackgroundColor="#DCEBF5"
                             app:cardCornerRadius="6dp"
                             app:cardElevation="0dp"
@@ -521,7 +545,7 @@
                                 android:paddingHorizontal="8dp"
                                 android:paddingVertical="3dp"
                                 android:textColor="#1F5F8B"
-                                android:textSize="8sp"
+                                android:textSize="10sp"
                                 android:textStyle="bold"
                                 tools:text="Aktif s/d 2027" />
                         </com.google.android.material.card.MaterialCardView>
@@ -532,9 +556,9 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="12dp"
                     app:cardBackgroundColor="#FFF4E5"
-                    app:cardCornerRadius="12dp"
+                    app:cardCornerRadius="16dp"
                     app:cardElevation="0dp"
                     app:strokeColor="#F3D9B5"
                     app:strokeWidth="1dp">
@@ -544,13 +568,13 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="12dp">
+                        android:padding="14dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="🧾"
-                            android:textSize="16sp" />
+                            android:textSize="18sp" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -564,9 +588,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="monospace"
+                                android:letterSpacing="0.06"
                                 android:text="PAKET SEWA 7 HARI + OPERATOR"
                                 android:textColor="#8D4B00"
-                                android:textSize="8sp"
+                                android:textSize="9sp"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -574,8 +599,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="1dp"
-                                android:textColor="#6B6F76"
-                                android:textSize="8sp"
+                                android:textColor="#8A7A5C"
+                                android:textSize="11sp"
                                 tools:text="Excavator Cat 320 CC" />
                         </LinearLayout>
 
@@ -583,35 +608,37 @@
                             android:id="@+id/tvPackageTotal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
                             android:fontFamily="sans-serif-black"
                             android:textColor="#8D4B00"
-                            android:textSize="13sp"
+                            android:textSize="14sp"
                             tools:text="Rp 33.950.000" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
+    </com.google.android.material.card.MaterialCardView>
 
     <!-- ===== TOMBOL PILIH ===== -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="16dp"
+        android:paddingHorizontal="20dp"
         android:paddingVertical="10dp">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnChoose"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:elevation="4dp"
+            android:layout_height="54dp"
+            android:fontFamily="sans-serif-black"
+            android:letterSpacing="0.04"
             android:text="👷  PILIH OPERATOR INI"
             android:textAllCaps="true"
             android:textColor="#FFFFFF"
-            android:textSize="12sp"
-            android:textStyle="bold"
+            android:textSize="14sp"
             app:backgroundTint="#8D4B00"
-            app:cornerRadius="12dp" />
+            app:cornerRadius="16dp"
+            app:elevation="2dp" />
     </FrameLayout>
 
     <!-- ===== BOTTOM NAVIGATION ===== -->
@@ -619,7 +646,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
-        android:elevation="10dp"
         android:orientation="horizontal"
         android:paddingVertical="6dp">
 

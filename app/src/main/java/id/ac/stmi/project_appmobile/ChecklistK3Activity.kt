@@ -1,5 +1,6 @@
 package id.ac.stmi.project_appmobile
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -7,6 +8,7 @@ import android.widget.CheckBox
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.card.MaterialCardView
+import kotlin.jvm.java
 
 class ChecklistK3Activity : AppCompatActivity() {
 
@@ -42,6 +44,7 @@ class ChecklistK3Activity : AppCompatActivity() {
 
         findViewById<View>(R.id.btnBack).setOnClickListener { finish() }
 
+        setupBottomNav()
         updateStatus() // kondisi awal: belum ada yang dicentang
     }
 
@@ -61,6 +64,35 @@ class ChecklistK3Activity : AppCompatActivity() {
             cardStatus.strokeColor = Color.parseColor("#FDBA74")
         }
         tvStatusDetail.text = "$terverifikasi dari ${checkBoxes.size} item terverifikasi"
+    }
+
+    /**
+     * Bottom navbar. Halaman ini dibuka dari TrackingActivity, jadi tab
+     * "Pelacakan" (aktif) cukup finish() untuk kembali ke sana.
+     */
+    private fun setupBottomNav() {
+        findViewById<View>(R.id.navCatalog).setOnClickListener {
+            navigateTo(MainActivity::class.java)
+        }
+        findViewById<View>(R.id.navOperator).setOnClickListener {
+            navigateTo(OperatorActivity::class.java)
+        }
+        findViewById<View>(R.id.navTracking).setOnClickListener { finish() }
+        findViewById<View>(R.id.navSettings).setOnClickListener {
+            navigateTo(SettingsActivity::class.java)
+        }
+    }
+
+    private fun navigateTo(target: Class<*>) {
+        startActivity(
+            Intent(this, target).apply {
+                addFlags(
+                    Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or
+                            Intent.FLAG_ACTIVITY_NO_ANIMATION
+                )
+            }
+        )
+        finish()
     }
 
     companion object {

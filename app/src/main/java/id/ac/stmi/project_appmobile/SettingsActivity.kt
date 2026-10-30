@@ -1,10 +1,13 @@
 package id.ac.stmi.project_appmobile
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
+import kotlin.jvm.java
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -12,7 +15,13 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        // Data customer dibaca dari SharedPreferences "customer_session"
+        bindProfile()
+        setupActions()
+        setupBottomNav()
+    }
+
+    /** Data customer dibaca dari SharedPreferences "customer_session". */
+    private fun bindProfile() {
         val nama = SessionManager.getName(this)
         val phone = SessionManager.getPhone(this)
 
@@ -20,12 +29,39 @@ class SettingsActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.tvProfilePhone).text = phone
         findViewById<TextView>(R.id.tvAvatarInitial).text =
             nama.firstOrNull { it.isLetter() }?.uppercase() ?: "?"
+    }
 
+    private fun setupActions() {
         findViewById<View>(R.id.btnBack).setOnClickListener { finish() }
 
         findViewById<MaterialButton>(R.id.btnLogout).setOnClickListener {
             // clear() sesi -> kembali ke LoginActivity (back stack dibersihkan)
             SessionManager.logout(this)
         }
+    }
+
+    /** Bottom navbar: tab "Lainnya" (navSettings) adalah halaman ini, jadi tanpa aksi. */
+    private fun setupBottomNav() {
+        findViewById<View>(R.id.navCatalog).setOnClickListener {
+            navigateTo(MainActivity::class.java)
+        }
+        findViewById<View>(R.id.navOperator).setOnClickListener {
+            navigateTo(OperatorActivity::class.java)
+        }
+        findViewById<View>(R.id.navTracking).setOnClickListener {
+            navigateTo(TrackingActivity::class.java)
+        }
+    }
+
+    private fun navigateTo(target: Class<*>) {
+        startActivity(
+            Intent(this, target).apply {
+                addFlags(
+                    Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or
+                            Intent.FLAG_ACTIVITY_NO_ANIMATION
+                )
+            }
+        )
+        finish()
     }
 }
