@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.LinearInterpolator
@@ -166,13 +167,13 @@ class TrackingActivity : AppCompatActivity() {
             remainingMinutes = 180
 
             if (!isWithOperator) {
-                driverName = "Tanpa Operator"
-                driverRole = "Sewa Mandiri • Pengiriman Logistik"
+                driverName = "Driver Pengiriman"
+                driverRole = "Sewa Mandiri • Tanpa Operator"
                 driverVehicle = "B 9021 TRK"
                 driverPhoneDisplay = "0811-1234-5678"
                 driverPhoneDial = "+6281112345678"
                 driverPhotoRes = R.drawable.ic_logo
-                findViewById<TextView>(R.id.tvDriverShort)?.text = "Tanpa Operator"
+                findViewById<TextView>(R.id.tvDriverShort)?.text = "Driver Pengiriman"
             } else {
                 intent.getStringExtra("EXTRA_DRIVER_NAME")?.let { name ->
                     driverName = name
@@ -201,9 +202,9 @@ class TrackingActivity : AppCompatActivity() {
         }
 
 
-        findViewById<View>(R.id.btnContactDispatch).setOnClickListener { showDriverDialog() }
-        findViewById<View>(R.id.cardDriver).setOnClickListener { showDriverDialog() }
-        findViewById<View>(R.id.btnCallQuick).setOnClickListener { showDriverDialog() }
+        findViewById<View>(R.id.btnContactDispatch).setOnClickListener { showDriverDialogSafely("btnContactDispatch") }
+        findViewById<View>(R.id.cardDriver).setOnClickListener { showDriverDialogSafely("cardDriver") }
+        findViewById<View>(R.id.btnCallQuick).setOnClickListener { showDriverDialogSafely("btnCallQuick") }
 
         setupBottomNav()
         renderStage()
@@ -416,6 +417,24 @@ class TrackingActivity : AppCompatActivity() {
         }
     }
 
+    // Pembungkus: kalau dialog gagal dibuat, penyebabnya ditampilkan (Toast + Logcat)
+    // supaya tidak hanya "tidak terjadi apa-apa".
+    private fun showDriverDialogSafely(sumber: String) {
+        Log.d("TRACKING", "klik $sumber | hasActiveOrder=$hasActiveOrder | withOperator=$isWithOperator")
+        try {
+            showDriverDialog()
+        } catch (e: Exception) {
+            Log.e("TRACKING", "Gagal menampilkan dialog driver", e)
+            // Tampilkan akar masalahnya (bukan hanya pesan paling luar)
+            val akar = generateSequence<Throwable>(e) { it.cause }.last()
+            Toast.makeText(
+                this,
+                "Dialog gagal dibuka: ${akar.javaClass.simpleName} - ${akar.message}",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
     private fun showDriverDialog() {
         if (!hasActiveOrder) {
             Toast.makeText(this, "Silakan pesan unit & operator terlebih dahulu.", Toast.LENGTH_SHORT).show()
@@ -429,8 +448,8 @@ class TrackingActivity : AppCompatActivity() {
         val unitCategory = activeUnitName.split(" ").firstOrNull() ?: "Unit"
 
         if (!isWithOperator) {
-            view.findViewById<TextView>(R.id.tvDialogDriverName).text = "Tanpa Operator"
-            view.findViewById<TextView>(R.id.tvDialogDriverRole).text = "Sewa Mandiri • Pengiriman Logistik"
+            view.findViewById<TextView>(R.id.tvDialogDriverName).text = "Driver Pengiriman"
+            view.findViewById<TextView>(R.id.tvDialogDriverRole).text = "Sewa Mandiri • Tanpa Operator"
             view.findViewById<TextView>(R.id.tvDialogVehicle).text = "$unitCategory • $driverVehicle"
         } else {
             view.findViewById<TextView>(R.id.tvDialogDriverName).text = driverName

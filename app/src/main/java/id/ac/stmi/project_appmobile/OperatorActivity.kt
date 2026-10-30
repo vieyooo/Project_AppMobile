@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import id.ac.stmi.project_appmobile.databinding.ActivityOperatorBinding
 
 class OperatorActivity : AppCompatActivity() {
@@ -82,6 +83,8 @@ class OperatorActivity : AppCompatActivity() {
         binding.tvWorkDays.text =
             if (jumlahHari > 0) "$jumlahHari HARI KERJA" else "- HARI KERJA"
 
+        bindUnitPreview(tarifUnit, jumlahHari)
+
         // Tidak ada operator yang terpilih di awal
         selectedOperator = null
 
@@ -115,10 +118,9 @@ class OperatorActivity : AppCompatActivity() {
                     Toast.makeText(this, "Pilih unit di Katalog terlebih dahulu", Toast.LENGTH_SHORT).show()
                 withOperatorMode && selectedOperator == null ->
                     Toast.makeText(this, "Pilih operator terlebih dahulu", Toast.LENGTH_SHORT).show()
-                else -> {
-                    startActivity(buildTrackingIntent())
-                    finish()
-                }
+                // Mode "Unit Saja": minta konfirmasi bahwa pesanan tanpa operator
+                !withOperatorMode -> tampilkanDialogTanpaOperator()
+                else -> lanjutKePelacakan()
             }
         }
 
@@ -140,6 +142,51 @@ class OperatorActivity : AppCompatActivity() {
         }
 
         setMode(true)
+    }
+
+    // Preview unit yang dipesan (tampil di mode "Unit Saja")
+    private fun bindUnitPreview(tarifUnit: Int, jumlahHari: Int) {
+        val nama = namaUnit
+        if (nama == null) {
+            binding.layoutUnitPreview.visibility = View.GONE
+            return
+        }
+
+        val upper = nama.uppercase()
+        binding.ivUnitPreview.setImageResource(
+            when {
+                upper.contains("EXCAVATOR") -> R.drawable.ic_excavator
+                upper.contains("BULLDOZER") -> R.drawable.ic_bulldozer
+                upper.contains("GRADER") -> R.drawable.ic_motorgrader
+                upper.contains("LOADER") -> R.drawable.ic_wheelloader
+                else -> R.drawable.ic_excavator
+            }
+        )
+
+        val hari = if (jumlahHari > 0) jumlahHari else 1
+        binding.tvUnitPreviewName.text = nama
+        binding.tvUnitPreviewTarif.text = "${rupiah(tarifUnit)} / hari × $hari hari"
+        binding.tvUnitPreviewTotal.text = "Estimasi total: ${rupiah(tarifUnit * hari)}"
+    }
+
+    private fun rupiah(nilai: Int) = "Rp " + "%,d".format(nilai).replace(',', '.')
+
+    private fun lanjutKePelacakan() {
+        startActivity(buildTrackingIntent())
+        finish()
+    }
+
+    private fun tampilkanDialogTanpaOperator() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle("Sewa Tanpa Operator")
+            .setMessage(
+                "Anda menyewa ${namaUnit ?: "unit"} tanpa operator.\n\n" +
+                        "Unit akan dikirim tanpa pengemudi/operator alat berat. " +
+                        "Pastikan Anda menyiapkan operator bersertifikat SIO sendiri."
+            )
+            .setPositiveButton("Lanjutkan") { _, _ -> lanjutKePelacakan() }
+            .setNegativeButton("Kembali", null)
+            .show()
     }
 
     // Data pesanan hanya dikirim kalau pesanan sudah lengkap.
