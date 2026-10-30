@@ -211,6 +211,57 @@
                             android:textSize="12sp" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
+                <!-- Tindakan yang perlu dilakukan (berubah otomatis sesuai centang) -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardTindakan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="#F0E3C4"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="18dp">
+
+                        <TextView
+                            android:id="@+id/tvTindakanJudul"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:letterSpacing="0.06"
+                            android:text="TINDAKAN YANG DIPERLUKAN"
+                            android:textColor="#8A7A5C"
+                            android:textSize="9sp" />
+
+                        <TextView
+                            android:id="@+id/tvTindakan"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:lineSpacingExtra="4dp"
+                            android:textColor="#3B2400"
+                            android:textSize="13sp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnAksi"
+                            android:layout_width="match_parent"
+                            android:layout_height="52dp"
+                            android:layout_marginTop="14dp"
+                            android:fontFamily="sans-serif-black"
+                            android:letterSpacing="0.04"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            app:backgroundTint="#2E7D32"
+                            app:cornerRadius="16dp" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
         </ScrollView>
     </com.google.android.material.card.MaterialCardView>
