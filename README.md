@@ -8,10 +8,10 @@ Proyek ini dikembangkan untuk memenuhi tugas Evaluasi Tengah Semester (ETS) Mata
 ---
 
 ## 👥 Tim Pengembang (Kelompok)
-* **Novi** - Auth & Operator Selection (`LoginActivity`, `OperatorActivity`)
-* **Bagus** - Katalog Utama & Detail Pemesanan (`MainActivity`, `DetailActivity`, `RecyclerView`)
-* **Bila** - Pelacakan Pengantaran & Logistik (`TrackingActivity`)
-* **Oshi** - Inspeksi K3 Digital & Pengaturan (`ChecklistK3Activity`, `SettingsActivity`)
+* **Titis Novianti Wicaksono** 
+* **Bagus Dwi** 
+* **Nabila Nurazizah** 
+* **Meliarosi Divavatima** 
 
 ---
 
