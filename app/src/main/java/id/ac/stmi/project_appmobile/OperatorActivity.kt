@@ -22,6 +22,12 @@ class OperatorActivity : AppCompatActivity() {
     // Nama unit dari katalog. null = belum memilih unit
     private var namaUnit: String? = null
 
+    // Data pesanan dari halaman Detail (dipakai untuk Riwayat Sewa)
+    private var tglMulaiPesan: String? = null
+    private var tglSelesaiPesan: String? = null
+    private var hariPesan = 1
+    private var tarifUnitPesan = 0
+
     // Daftar operator (Budi & Hendra dengan foto masing-masing)
     private val operators = listOf(
         Operator(
@@ -71,6 +77,11 @@ class OperatorActivity : AppCompatActivity() {
         val tglSelesai = intent.getStringExtra(DetailActivity.EXTRA_TGL_SELESAI)
         val jumlahHari = intent.getIntExtra(DetailActivity.EXTRA_JUMLAH_HARI, 0)
         val tarifUnit = intent.getIntExtra(DetailActivity.EXTRA_TARIF_UNIT, 0)
+
+        tglMulaiPesan = tglMulai
+        tglSelesaiPesan = tglSelesai
+        hariPesan = if (jumlahHari > 0) jumlahHari else 1
+        tarifUnitPesan = tarifUnit
 
         binding.tvUnitName.text = namaUnit?.uppercase() ?: "BELUM ADA UNIT DIPILIH"
 
@@ -171,7 +182,28 @@ class OperatorActivity : AppCompatActivity() {
 
     private fun rupiah(nilai: Int) = "Rp " + "%,d".format(nilai).replace(',', '.')
 
+    // Simpan pesanan ke Riwayat Sewa (SharedPreferences via AppPrefs)
+    private fun simpanRiwayat() {
+        val unit = namaUnit ?: return
+        val op = if (withOperatorMode) selectedOperator else null
+        val total = hariPesan.toLong() * (tarifUnitPesan + (op?.price ?: 0))
+        val mulai = tglMulaiPesan
+        val selesai = tglSelesaiPesan
+        AppPrefs.addOrder(
+            this,
+            RiwayatOrder(
+                unit = unit,
+                tanggal = if (mulai != null && selesai != null) "$mulai - $selesai" else "-",
+                total = total,
+                status = "Berjalan",
+                pembayaran = AppPrefs.getPayment(this),
+                operator = op?.name ?: "Tanpa operator"
+            )
+        )
+    }
+
     private fun lanjutKePelacakan() {
+        simpanRiwayat()
         startActivity(buildTrackingIntent())
         finish()
     }
