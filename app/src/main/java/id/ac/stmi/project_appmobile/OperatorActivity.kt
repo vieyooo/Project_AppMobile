@@ -27,6 +27,7 @@ class OperatorActivity : AppCompatActivity() {
     private var tglSelesaiPesan: String? = null
     private var hariPesan = 1
     private var tarifUnitPesan = 0
+    private var lokasiPesan: String? = null
 
     // Daftar operator (Budi & Hendra dengan foto masing-masing)
     private val operators = listOf(
@@ -82,6 +83,7 @@ class OperatorActivity : AppCompatActivity() {
         tglSelesaiPesan = tglSelesai
         hariPesan = if (jumlahHari > 0) jumlahHari else 1
         tarifUnitPesan = tarifUnit
+        lokasiPesan = intent.getStringExtra(DetailActivity.EXTRA_LOKASI)
 
         binding.tvUnitName.text = namaUnit?.uppercase() ?: "BELUM ADA UNIT DIPILIH"
 
@@ -109,6 +111,7 @@ class OperatorActivity : AppCompatActivity() {
                     putExtra(DetailOperatorActivity.EXTRA_UNIT_NAME, namaUnit ?: "Belum ada unit")
                     putExtra(DetailOperatorActivity.EXTRA_PACKAGE_TOTAL, hari * (tarifUnit + op.price))
                     putExtra(DetailOperatorActivity.EXTRA_PACKAGE_DAYS, hari)
+                    putExtra(DetailOperatorActivity.EXTRA_LOKASI, lokasiPesan)
                 }
                 detailLauncher.launch(detailIntent)
             },
@@ -197,7 +200,8 @@ class OperatorActivity : AppCompatActivity() {
                 total = total,
                 status = "Berjalan",
                 pembayaran = AppPrefs.getPayment(this),
-                operator = op?.name ?: "Tanpa operator"
+                operator = op?.name ?: "Tanpa operator",
+                lokasi = lokasiPesan ?: "-"
             )
         )
     }
@@ -233,6 +237,7 @@ class OperatorActivity : AppCompatActivity() {
             intent.putExtra(TrackingActivity.EXTRA_ORDER_ID, "TR-2024-0891")
             intent.putExtra("EXTRA_UNIT_NAME", unit!!.uppercase())
             intent.putExtra("EXTRA_UNIT_TYPE", unit.uppercase())
+            lokasiPesan?.let { intent.putExtra(TrackingActivity.EXTRA_LOKASI, it) }
             intent.putExtra("EXTRA_WITH_OPERATOR", withOperatorMode)
             if (withOperatorMode && operator != null) {
                 intent.putExtra("EXTRA_DRIVER_NAME", operator.name)

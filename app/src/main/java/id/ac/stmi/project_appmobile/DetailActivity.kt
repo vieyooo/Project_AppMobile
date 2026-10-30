@@ -2,8 +2,10 @@ package id.ac.stmi.project_appmobile
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.RadioGroup
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -32,6 +34,7 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var tvRincian: TextView
     private lateinit var tvTotal: TextView
     private lateinit var btnLanjut: MaterialButton
+    private lateinit var spLokasi: Spinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +54,7 @@ class DetailActivity : AppCompatActivity() {
         tampilkanDataUnit()
         hitungEstimasi()
         setupPembayaran()
+        setupLokasi()
 
         findViewById<View>(R.id.btnBack).setOnClickListener { finish() }
         findViewById<View>(R.id.boxMulai).setOnClickListener { pilihTanggalMulai() }
@@ -69,6 +73,9 @@ class DetailActivity : AppCompatActivity() {
                 // Dari Detail belum ada operator terpilih -> mode "Tanpa Operator"
                 // (nama driver & nomor telepon terisi otomatis di TrackingActivity)
                 putExtra("EXTRA_WITH_OPERATOR", false)
+                if (spLokasi.selectedItemPosition > 0) {
+                    putExtra(TrackingActivity.EXTRA_LOKASI, spLokasi.selectedItem.toString())
+                }
             }
             startActivity(intent)
         }
@@ -203,6 +210,18 @@ class DetailActivity : AppCompatActivity() {
     }
 
     // ---------------------------------------------------------------
+    // Spinner lokasi proyek (tujuan pengiriman unit)
+    // ---------------------------------------------------------------
+    private fun setupLokasi() {
+        spLokasi = findViewById(R.id.spLokasi)
+        val adapter = ArrayAdapter.createFromResource(
+            this, R.array.lokasi_list, R.layout.spinner_item
+        )
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
+        spLokasi.adapter = adapter // posisi 0 = placeholder "Pilih lokasi proyek"
+    }
+
+    // ---------------------------------------------------------------
     // RadioGroup metode pembayaran (disimpan di SharedPreferences via AppPrefs)
     // ---------------------------------------------------------------
     private fun setupPembayaran() {
@@ -233,6 +252,10 @@ class DetailActivity : AppCompatActivity() {
             Toast.makeText(this, "Lengkapi tanggal sewa dulu", Toast.LENGTH_SHORT).show()
             return
         }
+        if (spLokasi.selectedItemPosition == 0) {
+            Toast.makeText(this, "Pilih lokasi proyek dulu", Toast.LENGTH_SHORT).show()
+            return
+        }
 
         // DIPERBAIKI: Perhitungan selisih hari disatukan dalam satu baris
         val selisihHari = ((selesai - mulai) / MILIDETIK_PER_HARI).toInt()
@@ -244,6 +267,7 @@ class DetailActivity : AppCompatActivity() {
         intent.putExtra(EXTRA_TGL_MULAI, formatTanggal(mulai))
         intent.putExtra(EXTRA_TGL_SELESAI, formatTanggal(selesai))
         intent.putExtra(EXTRA_JUMLAH_HARI, jumlahHari)
+        intent.putExtra(EXTRA_LOKASI, spLokasi.selectedItem.toString())
         startActivity(intent)
     }
 
@@ -268,5 +292,6 @@ class DetailActivity : AppCompatActivity() {
         const val EXTRA_TGL_MULAI = "EXTRA_TGL_MULAI"
         const val EXTRA_TGL_SELESAI = "EXTRA_TGL_SELESAI"
         const val EXTRA_JUMLAH_HARI = "EXTRA_JUMLAH_HARI"
+        const val EXTRA_LOKASI = "EXTRA_LOKASI"
     }
 }

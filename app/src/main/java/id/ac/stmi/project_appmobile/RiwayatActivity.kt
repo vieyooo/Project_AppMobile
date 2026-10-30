@@ -39,6 +39,7 @@ class RiwayatActivity : AppCompatActivity() {
                 .setTitle(item.unit)
                 .setMessage(
                     "Tanggal: ${item.tanggal}\n" +
+                            "Lokasi Proyek: ${item.lokasi}\n" +
                             "Operator: ${item.operator}\n" +
                             "Total: ${rupiah(item.total)}\n" +
                             "Pembayaran: ${item.pembayaran}\n" +
@@ -52,11 +53,11 @@ class RiwayatActivity : AppCompatActivity() {
     private fun rupiah(nilai: Long) = "Rp " + "%,d".format(nilai).replace(',', '.')
 
     private inner class RiwayatAdapter :
-        ArrayAdapter<RiwayatOrder>(this@RiwayatActivity, R.layout.item_riwayat, daftar) {
+        ArrayAdapter<RiwayatOrder>(this@RiwayatActivity, R.layout.activity_item_riwayat, daftar) {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             val row = convertView
-                ?: LayoutInflater.from(context).inflate(R.layout.item_riwayat, parent, false)
+                ?: LayoutInflater.from(context).inflate(R.layout.activity_item_riwayat, parent, false)
             val item = getItem(position)!!
 
             row.findViewById<TextView>(R.id.tvRiwayatUnit).text = item.unit

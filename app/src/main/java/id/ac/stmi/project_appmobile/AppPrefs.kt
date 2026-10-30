@@ -11,20 +11,20 @@ data class RiwayatOrder(
     val total: Long,
     val status: String,
     val pembayaran: String,
-    val operator: String
+    val operator: String,
+    val lokasi: String
 )
 
 /**
  * Preferensi aplikasi (disimpan di SharedPreferences).
  *
- * Sengaja dipisah dari "customer_session" (SessionManager) supaya pilihan
- * Pool & metode pembayaran TIDAK ikut terhapus saat user menekan Logout
+ * Sengaja dipisah dari "customer_session" (SessionManager) supaya metode
+ * pembayaran & riwayat pesanan TIDAK ikut terhapus saat user menekan Logout
  * (SessionManager.logout() memanggil clear() pada file sesi).
  */
 object AppPrefs {
 
     private const val PREF_NAME = "app_preferences"
-    private const val KEY_POOL_INDEX = "KEY_POOL_INDEX"
     private const val KEY_PAYMENT = "KEY_PAYMENT"
     private const val KEY_ORDERS = "KEY_ORDERS"
 
@@ -34,13 +34,6 @@ object AppPrefs {
 
     private fun prefs(context: Context) =
         context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-
-    fun getPoolIndex(context: Context): Int =
-        prefs(context).getInt(KEY_POOL_INDEX, 0)
-
-    fun setPoolIndex(context: Context, index: Int) {
-        prefs(context).edit().putInt(KEY_POOL_INDEX, index).apply()
-    }
 
     fun getPayment(context: Context): String =
         prefs(context).getString(KEY_PAYMENT, PAYMENT_TRANSFER) ?: PAYMENT_TRANSFER
@@ -65,6 +58,7 @@ object AppPrefs {
                 .put("status", order.status)
                 .put("pembayaran", order.pembayaran)
                 .put("operator", order.operator)
+                .put("lokasi", order.lokasi)
         )
         for (i in 0 until lama.length()) baru.put(lama.getJSONObject(i))
         prefs(context).edit().putString(KEY_ORDERS, baru.toString()).apply()
@@ -80,7 +74,8 @@ object AppPrefs {
                 total = o.optLong("total"),
                 status = o.optString("status"),
                 pembayaran = o.optString("pembayaran"),
-                operator = o.optString("operator")
+                operator = o.optString("operator"),
+                lokasi = o.optString("lokasi").ifBlank { "-" }
             )
         }
     }

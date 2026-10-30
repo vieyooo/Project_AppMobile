@@ -259,7 +259,7 @@
                     android:layout_marginTop="20dp"
                     android:fontFamily="monospace"
                     android:letterSpacing="0.08"
-                    android:text="PREFERENSI PEMESANAN"
+                    android:text="PESANAN SAYA"
                     android:textColor="#7A4A00"
                     android:textSize="11sp"
                     android:textStyle="bold" />
@@ -278,34 +278,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
-
-                        <!-- Spinner: pool pengambilan default -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="16dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif-medium"
-                                android:text="Pool Pengambilan Default"
-                                android:textColor="#3B2400"
-                                android:textSize="14sp" />
-
-                            <Spinner
-                                android:id="@+id/spPool"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:minHeight="48dp" />
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="#F8F1E1" />
 
                         <!-- Menuju halaman ListView -->
                         <LinearLayout

@@ -88,6 +88,7 @@ class DetailOperatorActivity : AppCompatActivity() {
                 putExtra("EXTRA_DRIVER_NAME", op.name)
                 putExtra("EXTRA_DRIVER_ROLE", op.role)
                 putExtra("EXTRA_DRIVER_PHOTO", op.photoRes ?: R.drawable.foto_budi)
+                this@DetailOperatorActivity.intent.getStringExtra(EXTRA_LOKASI)?.let { putExtra(TrackingActivity.EXTRA_LOKASI, it) }
             }
             startActivity(intent)
             finish()
@@ -107,5 +108,6 @@ class DetailOperatorActivity : AppCompatActivity() {
         const val EXTRA_UNIT_NAME = "extra_unit_name"
         const val EXTRA_PACKAGE_TOTAL = "extra_package_total"
         const val EXTRA_PACKAGE_DAYS = "extra_package_days"
+        const val EXTRA_LOKASI = "extra_lokasi"
     }
 }

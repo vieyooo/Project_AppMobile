@@ -119,7 +119,13 @@ class TrackingActivity : AppCompatActivity() {
 
         activeUnitName = unitNameExtra ?: "Belum Ada Unit Dipilih"
         findViewById<TextView>(R.id.tvUnitName).text = activeUnitName
-        findViewById<TextView>(R.id.tvUnitLocation).text = if (hasActiveOrder) "Karawang • Lokasi Proyek" else "Silakan pilih unit & operator"
+        // Lokasi diambil dari pilihan customer di halaman Detail (bukan hardcode)
+        val lokasiExtra = intent.getStringExtra(EXTRA_LOKASI)
+        findViewById<TextView>(R.id.tvUnitLocation).text = when {
+            !hasActiveOrder -> "Silakan pilih unit & operator"
+            !lokasiExtra.isNullOrBlank() && lokasiExtra != "-" -> "$lokasiExtra • Lokasi Proyek"
+            else -> "Lokasi Proyek belum dipilih"
+        }
 
         // Menangkap Tanggal Sewa
         val rentDateExtra = intent.getStringExtra("EXTRA_TGL_MULAI") ?: intent.getStringExtra("EXTRA_DATE_RANGE")
@@ -495,5 +501,6 @@ class TrackingActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_ORDER_ID = "EXTRA_ORDER_ID"
+        const val EXTRA_LOKASI = "EXTRA_LOKASI"
     }
 }
