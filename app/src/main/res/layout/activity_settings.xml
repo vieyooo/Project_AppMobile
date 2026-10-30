@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/app-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,7 +9,6 @@
     android:orientation="vertical"
     tools:context=".SettingsActivity">
 
-    <!-- ===== TOP BAR (kuning) ===== -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,29 +16,27 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingHorizontal="16dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="34dp">
+        android:paddingTop="12dp"
+        android:paddingBottom="36dp">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/btnBack"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
             android:clickable="true"
             android:contentDescription="Kembali"
             android:focusable="true"
             app:cardBackgroundColor="#FFFFFF"
-            app:cardCornerRadius="24dp"
-            app:cardElevation="0dp"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="2dp"
             app:strokeWidth="0dp">
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
                 android:contentDescription="@null"
                 android:importantForAccessibility="no"
-                android:paddingLeft="17dp"
-                android:paddingTop="10dp"
-                android:scaleType="fitCenter"
                 app:srcCompat="@drawable/outline_arrow_back_ios_24"
                 app:tint="#3B2400" />
         </com.google.android.material.card.MaterialCardView>
@@ -66,11 +63,10 @@
                 android:letterSpacing="0.06"
                 android:text="PROFIL &amp; SESI CUSTOMER"
                 android:textColor="#7A4A00"
-                android:textSize="9sp" />
+                android:textSize="10sp" />
         </LinearLayout>
     </LinearLayout>
 
-    <!-- ===== SHEET (menimpa top bar, tepi melengkung) ===== -->
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -81,110 +77,215 @@
         app:cardElevation="0dp"
         app:strokeWidth="0dp">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:fillViewport="true"
+            android:scrollbars="none">
 
-            <!-- Kartu profil customer -->
-            <com.google.android.material.card.MaterialCardView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:cardBackgroundColor="#FFFFFF"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="0dp"
-                app:strokeColor="#F0E3C4"
-                app:strokeWidth="1dp">
+                android:orientation="vertical"
+                android:padding="20dp">
 
-                <LinearLayout
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="18dp">
-
-                    <TextView
-                        android:id="@+id/tvAvatarInitial"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:background="@drawable/trk_bg_circle_primary"
-                        android:backgroundTint="#FBBF24"
-                        android:fontFamily="sans-serif-black"
-                        android:gravity="center"
-                        android:text="\?"
-                        android:textColor="#3B2400"
-                        android:textSize="22sp" />
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="#F0E3C4"
+                    app:strokeWidth="1dp">
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="18dp">
+
+                        <TextView
+                            android:id="@+id/tvAvatarInitial"
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:background="@drawable/trk_bg_circle_primary"
+                            android:backgroundTint="#FBBF24"
+                            android:fontFamily="sans-serif-black"
+                            android:gravity="center"
+                            android:text="\?"
+                            android:textColor="#3B2400"
+                            android:textSize="22sp" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="monospace"
+                                android:letterSpacing="0.06"
+                                android:text="NAMA CUSTOMER"
+                                android:textColor="#8A7A5C"
+                                android:textSize="9sp" />
+
+                            <TextView
+                                android:id="@+id/tvProfileName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-black"
+                                android:text="-"
+                                android:textColor="#3B2400"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:fontFamily="monospace"
+                                android:letterSpacing="0.06"
+                                android:text="NOMOR HP"
+                                android:textColor="#8A7A5C"
+                                android:textSize="9sp" />
+
+                            <TextView
+                                android:id="@+id/tvProfilePhone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="-"
+                                android:textColor="#3B2400"
+                                android:textSize="15sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="monospace"
+                    android:letterSpacing="0.08"
+                    android:text="OPERASIONAL &amp; PROYEK"
+                    android:textColor="#7A4A00"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="1dp"
+                    app:strokeColor="#F0E3C4"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="monospace"
-                            android:letterSpacing="0.06"
-                            android:text="NAMA CUSTOMER"
-                            android:textColor="#8A7A5C"
-                            android:textSize="9sp" />
+                            android:gravity="center_vertical"
+                            android:padding="16dp">
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="sans-serif-medium"
+                                android:text="Lokasi Pool Utama &amp; Cabang"
+                                android:textColor="#3B2400"
+                                android:textSize="14sp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Pool A / C"
+                                android:textColor="#8A7A5C"
+                                android:textSize="12sp" />
+                        </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/tvProfileName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-black"
-                            android:text="-"
-                            android:textColor="#3B2400"
-                            android:textSize="18sp" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#F8F1E1" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="monospace"
-                            android:letterSpacing="0.06"
-                            android:text="NOMOR HP"
-                            android:textColor="#8A7A5C"
-                            android:textSize="9sp" />
-
-                        <TextView
-                            android:id="@+id/tvProfilePhone"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="-"
-                            android:textColor="#3B2400"
-                            android:textSize="15sp" />
+                            android:gravity="center_vertical"
+                            android:padding="16dp">
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="sans-serif-medium"
+                                android:text="Standar Verifikasi K3 Alat"
+                                android:textColor="#3B2400"
+                                android:textSize="14sp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="ISO 45001"
+                                android:textColor="#2E7D32"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                </com.google.android.material.card.MaterialCardView>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:text="Sesi login disimpan di perangkat ini. Logout akan menghapusnya, sehingga kamu perlu mengisi nama dan nomor HP lagi saat membuka aplikasi."
-                android:textColor="#8A7A5C"
-                android:textSize="12sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="monospace"
+                    android:letterSpacing="0.08"
+                    android:text="INFORMASI SESI LOCAL"
+                    android:textColor="#7A4A00"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Sesi login tersimpan lokal menggunakan SharedPreferences. Tombol Logout di bawah akan menghapus cache sesi tersebut."
+                    android:textColor="#8A7A5C"
+                    android:textSize="12sp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnLogout"
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:text="LOGOUT"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                app:backgroundTint="#C62828"
-                app:cornerRadius="14dp" />
-        </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnLogout"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:fontFamily="sans-serif-black"
+                    android:letterSpacing="0.04"
+                    android:text="LOGOUT SESI"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    app:backgroundTint="#C62828"
+                    app:cornerRadius="16dp"
+                    app:elevation="2dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="12dp"
+                    android:gravity="center"
+                    android:text="Heavy Equipment Mobile v1.0.0 • STMI 2026"
+                    android:textColor="#B0A080"
+                    android:textSize="11sp" />
+
+            </LinearLayout>
+        </ScrollView>
     </com.google.android.material.card.MaterialCardView>
 </LinearLayout>
