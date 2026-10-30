@@ -5,6 +5,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
@@ -16,6 +17,9 @@ class OperatorActivity : AppCompatActivity() {
     private lateinit var adapter: OperatorAdapter
     private var withOperatorMode = true
     private var selectedOperator: Operator? = null
+
+    // Nama unit dari katalog. null = belum memilih unit
+    private var namaUnit: String? = null
 
     // Daftar operator (Budi & Hendra dengan foto masing-masing)
     private val operators = listOf(
@@ -60,35 +64,35 @@ class OperatorActivity : AppCompatActivity() {
         binding = ActivityOperatorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Data dari halaman Detail Alat
-        val namaUnit = intent.getStringExtra(DetailActivity.EXTRA_NAMA_UNIT)
+        // Data dari halaman Detail Alat (kosong kalau dibuka dari menu bawah)
+        namaUnit = intent.getStringExtra(DetailActivity.EXTRA_NAMA_UNIT)
         val tglMulai = intent.getStringExtra(DetailActivity.EXTRA_TGL_MULAI)
         val tglSelesai = intent.getStringExtra(DetailActivity.EXTRA_TGL_SELESAI)
         val jumlahHari = intent.getIntExtra(DetailActivity.EXTRA_JUMLAH_HARI, 0)
-        val tarifUnit = intent.getIntExtra(DetailActivity.EXTRA_TARIF_UNIT, 4_500_000)
+        val tarifUnit = intent.getIntExtra(DetailActivity.EXTRA_TARIF_UNIT, 0)
 
-        binding.tvUnitName.text = namaUnit?.uppercase() ?: "EXCAVATOR CAT 336D L"
+        binding.tvUnitName.text = namaUnit?.uppercase() ?: "BELUM ADA UNIT DIPILIH"
 
         binding.tvDateRange.text = if (tglMulai != null && tglSelesai != null) {
             "$tglMulai\n$tglSelesai"
         } else {
-            "28 Okt - 04 Nov 2024"
+            "Belum ada tanggal sewa"
         }
 
         binding.tvWorkDays.text =
-            if (jumlahHari > 0) "$jumlahHari HARI KERJA" else "7 HARI KERJA"
+            if (jumlahHari > 0) "$jumlahHari HARI KERJA" else "- HARI KERJA"
 
-        // Default sesuai desain: Budi terpilih
-        selectedOperator = operators.first { id -> id.id == 1 }
+        // Tidak ada operator yang terpilih di awal
+        selectedOperator = null
 
         adapter = OperatorAdapter(
             items = operators,
-            selectedId = selectedOperator?.id,
+            selectedId = null,
             onDetail = { op ->
-                val hari = if (jumlahHari > 0) jumlahHari else 7
+                val hari = if (jumlahHari > 0) jumlahHari else 1
                 val detailIntent = Intent(this, DetailOperatorActivity::class.java).apply {
                     putExtra(DetailOperatorActivity.EXTRA_OPERATOR, op)
-                    putExtra(DetailOperatorActivity.EXTRA_UNIT_NAME, namaUnit ?: "Excavator CAT 336D L")
+                    putExtra(DetailOperatorActivity.EXTRA_UNIT_NAME, namaUnit ?: "Belum ada unit")
                     putExtra(DetailOperatorActivity.EXTRA_PACKAGE_TOTAL, hari * (tarifUnit + op.price))
                     putExtra(DetailOperatorActivity.EXTRA_PACKAGE_DAYS, hari)
                 }
@@ -104,19 +108,18 @@ class OperatorActivity : AppCompatActivity() {
         binding.btnUnitOnly.setOnClickListener { setMode(false) }
         binding.btnUnitOperator.setOnClickListener { setMode(true) }
 
-        // Tombol Konfirmasi Utama (Membawa data operator & status withOperatorMode ke TrackingActivity)
+        // Tombol Konfirmasi: hanya lanjut kalau unit dan operator (bila perlu) sudah dipilih
         binding.btnConfirm.setOnClickListener {
-            val intent = Intent(this, TrackingActivity::class.java).apply {
-                putExtra(TrackingActivity.EXTRA_ORDER_ID, "TR-2024-0891")
-                putExtra("EXTRA_UNIT_NAME", binding.tvUnitName.text.toString())
-                putExtra("EXTRA_DRIVER_NAME", selectedOperator?.name ?: "Budi Santoso")
-                putExtra("EXTRA_DRIVER_ROLE", selectedOperator?.role ?: "Senior Heavy Operator")
-                putExtra("EXTRA_UNIT_TYPE", binding.tvUnitName.text.toString())
-                putExtra("EXTRA_DRIVER_PHOTO", selectedOperator?.photoRes ?: R.drawable.foto_budi)
-                putExtra("EXTRA_WITH_OPERATOR", withOperatorMode) // PENTING: Mengirim status mode
+            when {
+                namaUnit == null ->
+                    Toast.makeText(this, "Pilih unit di Katalog terlebih dahulu", Toast.LENGTH_SHORT).show()
+                withOperatorMode && selectedOperator == null ->
+                    Toast.makeText(this, "Pilih operator terlebih dahulu", Toast.LENGTH_SHORT).show()
+                else -> {
+                    startActivity(buildTrackingIntent())
+                    finish()
+                }
             }
-            startActivity(intent)
-            finish()
         }
 
         // Navigasi Bawah
@@ -128,16 +131,7 @@ class OperatorActivity : AppCompatActivity() {
         }
 
         binding.navTracking.setOnClickListener {
-            val intent = Intent(this, TrackingActivity::class.java).apply {
-                putExtra(TrackingActivity.EXTRA_ORDER_ID, "TR-2024-0891")
-                putExtra("EXTRA_UNIT_NAME", binding.tvUnitName.text.toString())
-                putExtra("EXTRA_DRIVER_NAME", selectedOperator?.name ?: "Budi Santoso")
-                putExtra("EXTRA_DRIVER_ROLE", selectedOperator?.role ?: "Senior Heavy Operator")
-                putExtra("EXTRA_UNIT_TYPE", binding.tvUnitName.text.toString())
-                putExtra("EXTRA_DRIVER_PHOTO", selectedOperator?.photoRes ?: R.drawable.foto_budi)
-                putExtra("EXTRA_WITH_OPERATOR", withOperatorMode) // PENTING: Mengirim status mode
-            }
-            startActivity(intent)
+            startActivity(buildTrackingIntent())
             finish()
         }
 
@@ -146,6 +140,28 @@ class OperatorActivity : AppCompatActivity() {
         }
 
         setMode(true)
+    }
+
+    // Data pesanan hanya dikirim kalau pesanan sudah lengkap.
+    // Kalau belum, halaman Pelacakan menampilkan keadaan "belum ada pesanan".
+    private fun buildTrackingIntent(): Intent {
+        val intent = Intent(this, TrackingActivity::class.java)
+        val unit = namaUnit
+        val operator = selectedOperator
+        val lengkap = unit != null && (!withOperatorMode || operator != null)
+
+        if (lengkap) {
+            intent.putExtra(TrackingActivity.EXTRA_ORDER_ID, "TR-2024-0891")
+            intent.putExtra("EXTRA_UNIT_NAME", unit!!.uppercase())
+            intent.putExtra("EXTRA_UNIT_TYPE", unit.uppercase())
+            intent.putExtra("EXTRA_WITH_OPERATOR", withOperatorMode)
+            if (withOperatorMode && operator != null) {
+                intent.putExtra("EXTRA_DRIVER_NAME", operator.name)
+                intent.putExtra("EXTRA_DRIVER_ROLE", operator.role)
+                operator.photoRes?.let { intent.putExtra("EXTRA_DRIVER_PHOTO", it) }
+            }
+        }
+        return intent
     }
 
     private fun setMode(withOperator: Boolean) {
@@ -169,11 +185,14 @@ class OperatorActivity : AppCompatActivity() {
     }
 
     private fun updateConfirmButton() {
+        val bisaLanjut = namaUnit != null && (!withOperatorMode || selectedOperator != null)
         binding.btnConfirm.text = when {
+            namaUnit == null -> "Pilih Unit di Katalog Dulu"
             !withOperatorMode -> "Konfirmasi Unit Saja  →"
             selectedOperator == null -> "Pilih Operator Terlebih Dahulu"
             else -> "Konfirmasi Operator (1 Terpilih)  →"
         }
+        binding.btnConfirm.alpha = if (bisaLanjut) 1f else 0.5f
     }
 
     companion object {
