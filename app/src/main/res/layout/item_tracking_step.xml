@@ -1,42 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Pertemuan 4: RelativeLayout
+     Posisi view ditentukan relatif terhadap view lain / parent:
+     layout_below, layout_toEndOf, layout_toStartOf, layout_alignParent*, layout_alignBottom -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/stepRoot"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     android:padding="8dp">
 
-    <!-- Kolom kiri: lingkaran + garis -->
-    <LinearLayout
-        android:layout_width="28dp"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+    <!-- Kiri: lingkaran nomor (menempel di kiri-atas parent) -->
+    <TextView
+        android:id="@+id/tvStepNumber"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="1dp"
+        android:background="@drawable/trk_bg_circle_step"
+        android:gravity="center"
+        android:textColor="@color/trk_white"
+        android:textSize="11sp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tvStepNumber"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:background="@drawable/trk_bg_circle_step"
-            android:gravity="center"
-            android:textColor="@color/trk_white"
-            android:textSize="11sp"
-            android:textStyle="bold" />
-
-        <View
-            android:id="@+id/viewConnector"
-            android:layout_width="2dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="2dp"
-            android:layout_weight="1" />
-    </LinearLayout>
-
-    <!-- Kolom tengah: judul + keterangan -->
-    <LinearLayout
-        android:layout_width="0dp"
+    <!-- Kiri: garis penghubung.
+         Mulai di bawah lingkaran (layout_below) dan memanjang sampai bagian
+         bawah kolom judul (layout_alignBottom). -->
+    <View
+        android:id="@+id/viewConnector"
+        android:layout_width="2dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_weight="1"
+        android:layout_alignStart="@id/tvStepNumber"
+        android:layout_alignBottom="@id/stepMiddle"
+        android:layout_below="@id/tvStepNumber"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="2dp" />
+
+    <!-- Kanan: jam (menempel di kanan-atas parent) -->
+    <TextView
+        android:id="@+id/tvStepTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:fontFamily="monospace"
+        android:textColor="@color/trk_text_muted"
+        android:textSize="11sp" />
+
+    <!-- Tengah: judul + keterangan (di kanan lingkaran, di kiri jam) -->
+    <LinearLayout
+        android:id="@+id/stepMiddle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="12dp"
+        android:layout_toStartOf="@id/tvStepTime"
+        android:layout_toEndOf="@id/tvStepNumber"
         android:orientation="vertical"
         android:paddingBottom="6dp">
 
@@ -80,13 +98,4 @@
             android:textColor="@color/trk_text_muted"
             android:textSize="11sp" />
     </LinearLayout>
-
-    <!-- Kanan: jam -->
-    <TextView
-        android:id="@+id/tvStepTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="monospace"
-        android:textColor="@color/trk_text_muted"
-        android:textSize="11sp" />
-</LinearLayout>
+</RelativeLayout>

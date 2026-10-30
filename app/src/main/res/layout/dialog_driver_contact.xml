@@ -1,117 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Pertemuan 4: ConstraintLayout
+     Posisi view ditentukan lewat constraint: layout_constraint*_to*Of,
+     Barrier (batas dinamis) dan lebar 0dp (match constraint). -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/trk_bg_dialog"
-    android:orientation="vertical"
     android:padding="20dp">
 
-    <!-- Judul + tombol tutup -->
-    <LinearLayout
-        android:layout_width="match_parent"
+    <!-- ===== Judul + tombol tutup ===== -->
+    <TextView
+        android:id="@+id/tvDialogLabel"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:fontFamily="monospace"
+        android:text="KONTAK PENGEMUDI"
+        android:textColor="@color/trk_text_muted"
+        android:textSize="9sp"
+        app:layout_constraintEnd_toStartOf="@id/btnDialogClose"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
-                android:text="KONTAK PENGEMUDI"
-                android:textColor="@color/trk_text_muted"
-                android:textSize="9sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="Driver Truk Pengangkut"
-                android:textColor="@color/trk_text_dark"
-                android:textSize="17sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/btnDialogClose"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/trk_bg_icon_button"
-            android:clickable="true"
-            android:contentDescription="Tutup"
-            android:focusable="true"
-            android:gravity="center"
-            android:text="✕"
-            android:textColor="@color/trk_text_muted"
-            android:textSize="13sp" />
-    </LinearLayout>
-
-    <!-- Profil driver -->
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tvDialogTitle"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="Driver Truk Pengangkut"
+        android:textColor="@color/trk_text_dark"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/btnDialogClose"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDialogLabel" />
+
+    <TextView
+        android:id="@+id/btnDialogClose"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/trk_bg_icon_button"
+        android:clickable="true"
+        android:contentDescription="Tutup"
+        android:focusable="true"
+        android:gravity="center"
+        android:text="✕"
+        android:textColor="@color/trk_text_muted"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- ===== Profil driver ===== -->
+    <!-- Avatar dipusatkan vertikal terhadap blok nama..role:
+         top ke tvDialogDriverName dan bottom ke tvDialogDriverRole -->
+    <ImageView
+        android:id="@+id/ivDialogAvatar"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:background="@drawable/trk_bg_avatar"
+        android:clipToOutline="true"
+        android:contentDescription="Foto driver"
+        android:scaleType="centerCrop"
+        android:src="@drawable/foto_budi"
+        app:layout_constraintBottom_toBottomOf="@id/tvDialogDriverRole"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvDialogDriverName" />
+
+    <TextView
+        android:id="@+id/tvDialogDriverName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:textColor="@color/trk_text_dark"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ivDialogAvatar"
+        app:layout_constraintTop_toBottomOf="@id/tvDialogTitle" />
 
-        <ImageView
-            android:id="@+id/ivDialogAvatar"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:background="@drawable/trk_bg_avatar"
-            android:clipToOutline="true"
-            android:contentDescription="Foto driver"
-            android:scaleType="centerCrop"
-            android:src="@drawable/foto_budi" />
+    <TextView
+        android:id="@+id/tvDialogBadge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/trk_bg_badge_neutral"
+        android:fontFamily="monospace"
+        android:paddingStart="6dp"
+        android:paddingTop="2dp"
+        android:paddingEnd="6dp"
+        android:paddingBottom="2dp"
+        android:text="TERVERIFIKASI"
+        android:textColor="@color/trk_text_muted"
+        android:textSize="8sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/tvDialogDriverName"
+        app:layout_constraintTop_toBottomOf="@id/tvDialogDriverName" />
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
+    <TextView
+        android:id="@+id/tvDialogDriverRole"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:textColor="@color/trk_text_muted"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvDialogDriverName"
+        app:layout_constraintTop_toBottomOf="@id/tvDialogBadge" />
 
-            <TextView
-                android:id="@+id/tvDialogDriverName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/trk_text_dark"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+    <!-- Barrier: batas bawah blok profil = yang paling bawah antara avatar & role -->
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrierProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="ivDialogAvatar,tvDialogDriverRole" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:background="@drawable/trk_bg_badge_neutral"
-                android:fontFamily="monospace"
-                android:paddingStart="6dp"
-                android:paddingTop="2dp"
-                android:paddingEnd="6dp"
-                android:paddingBottom="2dp"
-                android:text="TERVERIFIKASI"
-                android:textColor="@color/trk_text_muted"
-                android:textSize="8sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvDialogDriverRole"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:textColor="@color/trk_text_muted"
-                android:textSize="11sp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <!-- Kotak info -->
+    <!-- ===== Kotak info ===== -->
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/boxInfo"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="@drawable/trk_bg_info_box"
@@ -119,7 +127,10 @@
         android:paddingStart="14dp"
         android:paddingTop="4dp"
         android:paddingEnd="14dp"
-        android:paddingBottom="4dp">
+        android:paddingBottom="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barrierProfile">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -210,10 +221,10 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Tombol -->
+    <!-- ===== Tombol ===== -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnDialogCall"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
         android:text="TELEPON"
@@ -223,31 +234,41 @@
         app:cornerRadius="12dp"
         app:icon="@drawable/trk_ic_phone"
         app:iconGravity="textStart"
-        app:iconTint="@color/trk_white" />
+        app:iconTint="@color/trk_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/boxInfo" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnDialogMessage"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="8dp"
         android:text="KIRIM PESAN"
         android:textColor="@color/trk_primary"
         android:textStyle="bold"
         app:cornerRadius="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnDialogCall"
         app:strokeColor="@color/trk_line" />
 
     <TextView
         android:id="@+id/btnDialogDismiss"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
         android:gravity="center"
+        android:minHeight="48dp"
         android:paddingTop="12dp"
         android:paddingBottom="4dp"
         android:text="Tutup"
         android:textColor="@color/trk_text_muted"
-        android:textSize="13sp" />
-</LinearLayout>
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnDialogMessage" />
+</androidx.constraintlayout.widget.ConstraintLayout>
