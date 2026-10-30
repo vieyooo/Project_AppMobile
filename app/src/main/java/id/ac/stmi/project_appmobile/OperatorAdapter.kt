@@ -1,5 +1,6 @@
 package id.ac.stmi.project_appmobile
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
@@ -27,6 +29,7 @@ class OperatorAdapter(
         val tvRating: TextView = v.findViewById(R.id.tvRating)
         val tvPrice: TextView = v.findViewById(R.id.tvPrice)
         val btnSelect: MaterialButton = v.findViewById(R.id.btnSelect)
+        val btnMore: ImageView = v.findViewById(R.id.btnMore)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
@@ -84,9 +87,55 @@ class OperatorAdapter(
         // Klik tombol -> pilih operator
         h.btnSelect.setOnClickListener {
             android.util.Log.d("OPERATOR", "tombol pilih diklik: ${op.name}")
-            if (selectedId == op.id) return@setOnClickListener
-            select(op.id)
-            onSelected(op)
+            pilihOperator(op)
         }
+
+        // Klik titik tiga -> Popup Menu
+        h.btnMore.setOnClickListener { anchor -> tampilkanPopupMenu(anchor, op) }
+    }
+
+    // ---------------------------------------------------------------
+    // Popup Menu (titik tiga di kartu operator)
+    // ---------------------------------------------------------------
+    private fun tampilkanPopupMenu(anchor: View, op: Operator) {
+        PopupMenu(anchor.context, anchor).apply {
+            menuInflater.inflate(R.menu.popup_menu_operator, menu)
+            setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.popup_detail -> {
+                        onDetail(op)
+                        true
+                    }
+                    R.id.popup_select -> {
+                        pilihOperator(op)
+                        true
+                    }
+                    R.id.popup_share -> {
+                        bagikanProfil(anchor, op)
+                        true
+                    }
+                    else -> false
+                }
+            }
+            show()
+        }
+    }
+
+    private fun pilihOperator(op: Operator) {
+        if (selectedId == op.id) return
+        select(op.id)
+        onSelected(op)
+    }
+
+    private fun bagikanProfil(anchor: View, op: Operator) {
+        val teks = "Operator: ${op.name}\n" +
+                "${op.kelas}  •  SIO ${op.sio}\n" +
+                "Rating ${op.rating} (${op.reviews} ulasan)\n" +
+                "Tarif: Rp " + "%,d".format(op.price).replace(',', '.') + " / hari"
+        val kirim = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, teks)
+        }
+        anchor.context.startActivity(Intent.createChooser(kirim, "Bagikan profil operator"))
     }
 }

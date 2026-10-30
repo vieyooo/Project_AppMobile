@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/popup_detail"
+        android:title="@string/popup_detail" />
+
+    <item
+        android:id="@+id/popup_select"
+        android:title="@string/popup_select" />
+
+    <item
+        android:id="@+id/popup_share"
+        android:title="@string/popup_share" />
+</menu>

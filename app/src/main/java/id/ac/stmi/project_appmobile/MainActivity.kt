@@ -1,15 +1,34 @@
 package id.ac.stmi.project_appmobile
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlin.jvm.java
 
 class MainActivity : AppCompatActivity() {
+
+    private data class UnitInfo(val nama: String, val tarif: Int, val pool: String)
+
+    // Data tiap kartu unit di katalog
+    private val units = mapOf(
+        R.id.cardUnit1 to UnitInfo("Excavator CAT 336D L", 4500000, "Pool A"),
+        R.id.cardUnit2 to UnitInfo("Bulldozer CAT D6R", 3800000, "Pool A"),
+        R.id.cardUnit3 to UnitInfo("Motor Grader CAT 140", 4100000, "Pool A"),
+        R.id.cardUnit4 to UnitInfo("Wheel Loader CAT 950 GC", 3500000, "Pool C")
+    )
+
+    // Unit yang sedang ditekan lama (untuk Context Menu)
+    private var unitTerpilih: UnitInfo? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,17 +40,11 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         // ----- Klik kartu unit -> buka halaman detail -----
-        findViewById<View>(R.id.cardUnit1).setOnClickListener {
-            bukaDetail("Excavator CAT 336D L", 4500000, "Pool A")
-        }
-        findViewById<View>(R.id.cardUnit2).setOnClickListener {
-            bukaDetail("Bulldozer CAT D6R", 3800000, "Pool A")
-        }
-        findViewById<View>(R.id.cardUnit3).setOnClickListener {
-            bukaDetail("Motor Grader CAT 140", 4100000, "Pool A")
-        }
-        findViewById<View>(R.id.cardUnit4).setOnClickListener {
-            bukaDetail("Wheel Loader CAT 950 GC", 3500000, "Pool C")
+        // ----- Tekan lama kartu unit -> Context Menu -----
+        units.forEach { (cardId, unit) ->
+            val card = findViewById<View>(cardId)
+            card.setOnClickListener { bukaDetail(unit.nama, unit.tarif, unit.pool) }
+            registerForContextMenu(card)
         }
 
         // ----- Menu bawah (Katalog = halaman ini, tidak perlu aksi) -----
@@ -79,12 +92,55 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // ---------------------------------------------------------------
+    // Context Menu (tekan lama pada kartu unit)
+    // ---------------------------------------------------------------
+    override fun onCreateContextMenu(
+        menu: ContextMenu,
+        v: View,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        val unit = units[v.id] ?: return
+        unitTerpilih = unit
+        menu.setHeaderTitle(unit.nama)
+        menuInflater.inflate(R.menu.context_menu_unit, menu)
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        val unit = unitTerpilih ?: return super.onContextItemSelected(item)
+        return when (item.itemId) {
+            R.id.ctx_detail -> {
+                bukaDetail(unit.nama, unit.tarif, unit.pool)
+                true
+            }
+            R.id.ctx_copy -> {
+                val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                clipboard.setPrimaryClip(ClipData.newPlainText("Nama unit", unit.nama))
+                Toast.makeText(this, "Nama unit disalin", Toast.LENGTH_SHORT).show()
+                true
+            }
+            R.id.ctx_share -> {
+                val teks = "${unit.nama}\n" +
+                        "Tarif: Rp " + "%,d".format(unit.tarif).replace(',', '.') + " / hari\n" +
+                        "Lokasi: ${unit.pool}"
+                val kirim = Intent(Intent.ACTION_SEND).apply {
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_TEXT, teks)
+                }
+                startActivity(Intent.createChooser(kirim, "Bagikan unit"))
+                true
+            }
+            else -> super.onContextItemSelected(item)
+        }
+    }
+
     private fun tampilkanProfil() {
         MaterialAlertDialogBuilder(this)
             .setTitle("Profil Customer")
             .setMessage(
                 "Nama: ${SessionManager.getName(this)}\n" +
-                    "No. HP: ${SessionManager.getPhone(this)}"
+                        "No. HP: ${SessionManager.getPhone(this)}"
             )
             .setPositiveButton("Tutup", null)
             .show()
@@ -95,9 +151,9 @@ class MainActivity : AppCompatActivity() {
             .setTitle("Bantuan")
             .setMessage(
                 "1. Pilih unit alat berat di katalog.\n" +
-                    "2. Tentukan tanggal sewa, lalu lanjut ke pilihan operator.\n" +
-                    "3. Pantau pengiriman unit di menu Pelacakan.\n" +
-                    "4. Setelah unit tiba, isi Checklist K3 sebelum unit dioperasikan."
+                        "2. Tentukan tanggal sewa, lalu lanjut ke pilihan operator.\n" +
+                        "3. Pantau pengiriman unit di menu Pelacakan.\n" +
+                        "4. Setelah unit tiba, isi Checklist K3 sebelum unit dioperasikan."
             )
             .setPositiveButton("Mengerti", null)
             .show()

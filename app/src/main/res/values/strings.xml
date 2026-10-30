@@ -6,4 +6,15 @@
     <string name="menu_profile">Profil</string>
     <string name="menu_help">Bantuan</string>
     <string name="menu_logout">Logout</string>
+
+    <!-- Context Menu (tekan lama kartu unit) di MainActivity -->
+    <string name="ctx_detail">Lihat Detail &amp; Sewa</string>
+    <string name="ctx_copy">Salin Nama Unit</string>
+    <string name="ctx_share">Bagikan Unit</string>
+
+    <!-- Popup Menu (tombol titik tiga kartu operator) di OperatorActivity -->
+    <string name="popup_detail">Lihat Detail</string>
+    <string name="popup_select">Pilih Operator</string>
+    <string name="popup_share">Bagikan Profil</string>
+    <string name="desc_more_options">Opsi lainnya</string>
 </resources>
