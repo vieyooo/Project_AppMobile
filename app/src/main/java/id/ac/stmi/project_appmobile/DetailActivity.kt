@@ -3,6 +3,7 @@ package id.ac.stmi.project_appmobile
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -49,6 +50,7 @@ class DetailActivity : AppCompatActivity() {
 
         tampilkanDataUnit()
         hitungEstimasi()
+        setupPembayaran()
 
         findViewById<View>(R.id.btnBack).setOnClickListener { finish() }
         findViewById<View>(R.id.boxMulai).setOnClickListener { pilihTanggalMulai() }
@@ -198,6 +200,30 @@ class DetailActivity : AppCompatActivity() {
         tvRincian.text = "Rp ${formatRupiah(tarifPerHari.toLong())} × $jumlahHari hari"
         tvTotal.text = "Rp ${formatRupiah(total)}"
         btnLanjut.alpha = 1f
+    }
+
+    // ---------------------------------------------------------------
+    // RadioGroup metode pembayaran (disimpan di SharedPreferences via AppPrefs)
+    // ---------------------------------------------------------------
+    private fun setupPembayaran() {
+        val rgPayment = findViewById<RadioGroup>(R.id.rgPayment)
+        rgPayment.check(
+            when (AppPrefs.getPayment(this)) {
+                AppPrefs.PAYMENT_TUNAI -> R.id.rbTunai
+                AppPrefs.PAYMENT_TERMIN -> R.id.rbTermin
+                else -> R.id.rbTransfer
+            }
+        )
+        rgPayment.setOnCheckedChangeListener { _, checkedId ->
+            AppPrefs.setPayment(
+                this,
+                when (checkedId) {
+                    R.id.rbTunai -> AppPrefs.PAYMENT_TUNAI
+                    R.id.rbTermin -> AppPrefs.PAYMENT_TERMIN
+                    else -> AppPrefs.PAYMENT_TRANSFER
+                }
+            )
+        }
     }
 
     private fun lanjutKeOperator() {

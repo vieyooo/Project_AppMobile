@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Pilihan Spinner "Pool Pengambilan Default" di SettingsActivity -->
+    <string-array name="pool_list">
+        <item>Pool A • Karawang</item>
+        <item>Pool B • Bekasi</item>
+        <item>Pool C</item>
+    </string-array>
+</resources>
