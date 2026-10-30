@@ -90,5 +90,18 @@
             android:dividerHeight="12dp"
             android:padding="20dp"
             android:scrollbars="none" />
+
+        <!-- Tampil otomatis (emptyView) saat belum ada pesanan -->
+        <TextView
+            android:id="@+id/tvKosong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingHorizontal="32dp"
+            android:text="Belum ada pesanan.\nPesanan muncul di sini setelah kamu mengonfirmasi unit."
+            android:textColor="#8A7A5C"
+            android:textSize="13sp"
+            android:visibility="gone" />
     </com.google.android.material.card.MaterialCardView>
 </LinearLayout>
